@@ -74,7 +74,6 @@ const translations = {
     'keynotes.tba': 'A ser anunciado',
     'keynotes.topic': 'Tema',
     'keynotes.abstract': 'Resumo',
-    'keynotes.comingSoon': 'Em breve serão anunciados os keynote speakers do SE4AS 2026',
     
     // Dates
     'dates.title': 'Datas Importantes',
@@ -180,7 +179,6 @@ const translations = {
     'keynotes.tba': 'To be announced',
     'keynotes.topic': 'Topic',
     'keynotes.abstract': 'Abstract',
-    'keynotes.comingSoon': 'Keynote speakers for SE4AS 2026 will be announced soon',
     
     // Dates
     'dates.title': 'Important Dates',
