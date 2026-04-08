@@ -7,8 +7,11 @@ import { GeometricBackground } from './components/GeometricBackground';
 import { SectionConnector } from './components/SectionConnector';
 import { TypewriterText } from './components/TypewriterText';
 import { Countdown } from './components/Countdown';
+import { EventLogo } from './components/EventLogo';
+import { LanguageToggle } from './components/LanguageToggle';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 
-// Animated Section Wrapper
+
 function AnimatedSection({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -26,9 +29,10 @@ function AnimatedSection({ children, className = '', delay = 0 }: { children: Re
   );
 }
 
-export default function App() {
+function AppContent() {
   const { scrollYProgress } = useScroll();
   const heroRef = useRef<HTMLDivElement>(null);
+  const { t, language } = useLanguage();
 
   // Smooth scroll
   useEffect(() => {
@@ -38,114 +42,46 @@ export default function App() {
     };
   }, []);
 
-  const topics = [
-    "Software engineering techniques and methodologies for agentic systems",
-    "Requirements engineering for agentic systems",
-    "Architectures for agentic systems (e.g., single-agent, multi-agent, hierarchical)",
-    "Evaluation and benchmarking of agentic systems",
-    "Testing, validation, and verification of agentic systems",
-    "Observability, monitoring, and debugging of agentic systems",
-    "Tool use and integration in agent workflows",
-    "Memory, planning, and reasoning mechanisms",
-    "Coordination, communication, and collaboration in agentic systems",
-    "Human-in-the-loop and hybrid agentic systems",
-    "Safety, ethics, and governance of agentic systems",
-    "Empirical studies and industrial experiences with agentic systems",
-    "Applications of agentic systems in software, data science, education, healthcare, and defense"
-  ];
-
   const importantDates = [
-    { label: "Paper registration", date: "July 3, 2026" },
-    { label: "Paper submission", date: "July 10, 2026" },
-    { label: "Author notification", date: "August 3, 2026" },
-    { label: "Camera-ready", date: "August 10, 2026" },
-    { label: "Workshop date", date: "September 8, 2026" }
+    { label: t('dates.registration'), date: "July 3, 2026" },
+    { label: t('dates.submission'), date: "July 10, 2026" },
+    { label: t('dates.notification'), date: "August 3, 2026" },
+    { label: t('dates.camera'), date: "August 10, 2026" },
+    { label: t('dates.workshop'), date: "September 8, 2026" }
   ];
 
-  const submissionTypes = [
-    { type: "Short papers", pages: "6 pages", description: "including all figures, tables, and acknowledgments", icon: "📄" },
-    { type: "Position and vision papers", pages: "4 pages", description: "including all figures, tables, and acknowledgments", icon: "💡" },
-    { type: "Industrial experience reports", pages: "4 pages", description: "including all figures, tables, and acknowledgments", icon: "🏢" },
-    { type: "Tool, framework, or benchmark proposals", pages: "2 pages", description: "including all figures, tables, and acknowledgments", icon: "🛠️" }
+  const committeeCoordination = [
+    { name: "Patrícia D. L. Machado", institution: "UFCG" },
+    { name: "Leandro Balby Marinho", institution: "UFCG" },
+    { name: "Everton Leandro Galdino Alves", institution: "UFCG" }
   ];
 
-  const keynotes = [
-    {
-      name: "Prof. Leandro Balby",
-      title: "AI Research Lead",
-      institution: "Federal University of Campina Grande",
-      image: "https://images.unsplash.com/photo-1659353221405-29b7d087f9e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBtYWxlJTIwdGVjaG5vbG9neSUyMGV4cGVydCUyMHBvcnRyYWl0fGVufDF8fHx8MTc3NDk4NTcyNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      topic: "The Future of Agentic Architectures"
-    },
-    {
-      name: "Prof. Eliane Araujo",
-      title: "Software Engineering Professor",
-      institution: "Federal University of Campina Grande",
-      image: "eliane-araujo.jpeg",
-      topic: "Responsible AI in Production Systems"
-    },
-    {
-      name: "Prof. Patrícia Machado",
-      title: "Chief Scientist",
-      institution: "Federal University of Campina Grande",
-      image: "patricia-machado.jpeg",
-      topic: "Multi-Agent Systems at Scale"
-    },
-    {
-      name: "Prof. Everton Alves",
-      title: "Research Scientist",
-      institution: "Federal University of Campina Grande",
-      image: "https://images.unsplash.com/photo-1659353221405-29b7d087f9e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBtYWxlJTIwdGVjaG5vbG9neSUyMGV4cGVydCUyMHBvcnRyYWl0fGVufDF8fHx8MTc3NDk4NTcyNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      topic: "Ethics in Autonomous Systems"
-    }
+  const committeeProgram = [
+    { name: "Alessandro Garcia", institution: "PUC-Rio" },
+    { name: "Anderson Uchôa", institution: "UFC" },
+    { name: "André Carvalho", institution: "UFAM" },
+    { name: "André Hora", institution: "UFMG" },
+    { name: "Awdren Fontão", institution: "UFMS" },
+    { name: "Baldoíno Fonseca", institution: "UFAL" },
+    { name: "Carlos Caminha", institution: "UFC" },
+    { name: "Everton Alves", institution: "UFCG" },
+    { name: "Eliane Araújo", institution: "UFCG" },
+    { name: "Francisco Gomes", institution: "University of Gothenburg, SE" },
+    { name: "Guilherme Avelino", institution: "UFPI" },
+    { name: "João Eduardo Montandon", institution: "UFMG" },
+    { name: "Leandro Marinho", institution: "UFCG" },
+    { name: "Marcelo D'Amorim", institution: "UFPE" },
+    { name: "Mário Ribeiro", institution: "UFAL" },
+    { name: "Patrícia Machado", institution: "UFCG" },
+    { name: "Vânia Neves", institution: "UFF" }
   ];
 
-  const organizationMembers = [
-    {
-      name: "Prof. Leandro Balby",
-      institution: "Federal University of Campina Grande",
-      image: "https://images.unsplash.com/photo-1659353221405-29b7d087f9e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBtYWxlJTIwdGVjaG5vbG9neSUyMGV4cGVydCUyMHBvcnRyYWl0fGVufDF8fHx8MTc3NDk4NTcyNXww&ixlib=rb-4.1.0&q=80&w=1080"
-    },
-    {
-      name: "Prof. Eliane Araujo",
-      institution: "Federal University of Campina Grande",
-      image: "eliane-araujo.jpeg"
-    },
-    {
-      name: "Prof. Patrícia Machado",
-      institution: "Federal University of Campina Grande",
-      image: "patricia-machado.jpeg"
-    },
-    {
-      name: "Prof. Everton Alves",
-      institution: "Federal University of Campina Grande",
-      image: "https://images.unsplash.com/photo-1659353221405-29b7d087f9e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBtYWxlJTIwdGVjaG5vbG9neSUyMGV4cGVydCUyMHBvcnRyYWl0fGVufDF8fHx8MTc3NDk4NTcyNXww&ixlib=rb-4.1.0&q=80&w=1080"
-    },
-    {
-      name: "Débora Souza",
-      institution: "Federal University of Campina Grande",
-      image: "debora-souza.jpeg"
-    },
-    {
-      name: "Caíque Calazans",
-      institution: "Federal University of Campina Grande",
-      image: "caique-calazans.jpeg"
-    },
-    {
-      name: "Beatriz Furtado",
-      institution: "Federal University of Campina Grande",
-      image: "beatriz-furtado.jpeg"
-    },
-    {
-      name: "Gabriella Araujo",
-      institution: "Federal University of Campina Grande",
-      image: "gabriella-araujo.jpeg"
-    },
-    {
-      name: "Matheus Hensley",
-      institution: "Federal University of Campina Grande",
-      image: "matheus-hensley.jpeg"
-    }
+  const committeeOrganization = [
+    { name: "Débora Souza", institution: "UFCG" },
+    { name: "Caíque Calazans", institution: "UFCG" },
+    { name: "Beatriz Furtado", institution: "UFCG" },
+    { name: "Gabriella Araujo", institution: "UFCG" },
+    { name: "Matheus Hensley", institution: "UFCG" }
   ];
 
   const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -50]);
@@ -168,20 +104,21 @@ export default function App() {
       >
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-          <motion.div
-            className="flex items-center gap-3"
-            whileHover={{ scale: 1.02 }}
-          >
-            <div className="w-16 h-12 flex items-center justify-center">
-              <img 
-                src="logo-se4as.svg" 
-                alt="SE4AS Logo" 
-                className="w-full h-full object-contain scale-175"
-              />
-            </div>
-          </motion.div>
-            <div className="hidden md:flex gap-8">
-              {['overview', 'topics', 'keynotes', 'dates', 'submission', 'organization'].map((item) => (
+            <motion.div
+              className="flex items-center gap-3"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="w-16 h-12 flex items-center justify-center">
+                <img 
+                  src="logo-se4as.svg" 
+                  alt="SE4AS Logo" 
+                  className="w-full h-full object-contain scale-175"
+                />
+              </div>
+            </motion.div>
+
+            <div className="hidden md:flex items-center gap-8">
+              {(['overview', 'topics', 'keynotes', 'dates', 'submission', 'committee'] as const).map((item) => (
                 <motion.a
                   key={item}
                   href={`#${item}`}
@@ -189,9 +126,10 @@ export default function App() {
                   whileHover={{ y: -1 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  {item}
+                  {t(`nav.${item}`)}
                 </motion.a>
               ))}
+              <LanguageToggle />
             </div>
           </div>
         </div>
@@ -214,7 +152,7 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
                 <Badge className="mb-6 bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700">
-                  Co-located with CBSoft 2026
+                  {t('hero.colocated')}
                 </Badge>
               </motion.div>
 
@@ -234,7 +172,8 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
                 <TypewriterText
-                  text="I Workshop on Software Engineering for Agentic Systems"
+                  key={language}
+                  text={t('hero.title')}
                   delay={1000}
                   speed={50}
                 />
@@ -248,7 +187,7 @@ export default function App() {
               >
                 <div className="flex items-center gap-3 bg-slate-800/50 backdrop-blur-sm px-5 py-3 rounded-lg border border-slate-700">
                   <Calendar className="w-4 h-4 text-slate-400" />
-                  <span className="text-sm">September 8, 2026</span>
+                  <span className="text-sm">{t('hero.date')}</span>
                 </div>
                 
                 <motion.a 
@@ -260,7 +199,7 @@ export default function App() {
                     whileTap={{ scale: 0.98 }}
                   >
                     <MapPin className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
-                    <span className="text-sm">IME - USP, São Paulo, SP</span>
+                    <span className="text-sm">{t('hero.location')}</span>
                   </motion.a>
                   
               </motion.div>
@@ -278,7 +217,7 @@ export default function App() {
                       document.getElementById('submission')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                   >
-                    Submit Your Paper
+                    {t('hero.submit')}
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </motion.div>
@@ -287,7 +226,7 @@ export default function App() {
                     className="bg-slate-100 hover:bg-white text-slate-900 transition-all duration-300 px-8 py-6 shadow-lg"
                     onClick={() => window.open('https://cbsoft.sbc.org.br/2026/pt/cbsoft/', '_blank')}
                   >
-                    CBSoft 2026 Information
+                    {t('hero.cbsoft')}
                     <ExternalLink className="w-4 h-4 ml-2" />
                   </Button>
                 </motion.div>
@@ -329,7 +268,7 @@ export default function App() {
             <div className="flex items-center gap-4 mb-12">
               <div className="w-12 h-1 bg-slate-800" />
               <h2 className="text-5xl font-bold text-slate-900">
-                Overview
+                {t('overview.title')}
               </h2>
             </div>
           </AnimatedSection>
@@ -338,14 +277,13 @@ export default function App() {
             <AnimatedSection delay={0.2}>
               <div className="space-y-6">
                 <p className="text-slate-700 leading-relaxed text-lg">
-                  In recent years, advances in foundation models, Large Language Models (LLMs), and autonomous systems have driven the emergence of{' '}
-                  <span className="font-semibold text-slate-900">Agentic Systems</span>—systems composed of agents capable of perception, planning, decision-making, and continuous action in dynamic and uncertain environments.
+                  {t('overview.p1')}
                 </p>
                 <p className="text-slate-700 leading-relaxed text-lg">
-                  These systems introduce challenges that differ from traditional LLM-based applications, as they maintain state, interact with external tools, coordinate multiple entities, and operate in an iterative, goal-oriented manner.
+                  {t('overview.p2')}
                 </p>
                 <p className="text-slate-700 leading-relaxed text-lg">
-                  Despite their rapid growth, there are still methodological, architectural, and software engineering gaps that hinder the robust, reliable, and responsible development of these systems.
+                  {t('overview.p3')}
                 </p>
               </div>
             </AnimatedSection>
@@ -353,21 +291,15 @@ export default function App() {
             <AnimatedSection delay={0.3}>
               <div className="bg-slate-50 rounded-2xl p-10 border border-slate-200 shadow-sm">
                 <h3 className="text-2xl font-semibold text-slate-900 mb-6">
-                  Workshop Goals
+                  {t('overview.goals')}
                 </h3>
                 <p className="text-slate-700 mb-8 leading-relaxed">
-                  SE4AS aims to consolidate a scientific and technical agenda by bringing together researchers and industry practitioners interested in Software Engineering for Agentic Systems.
+                  {t('overview.goalsText')}
                 </p>
                 <div className="space-y-4">
-                  {[
-                    "Identification of open research challenges",
-                    "Consolidation of a common vocabulary in Agentic Engineering",
-                    "Discussion of architectural and methodological approaches",
-                    "Encouragement of inter-institutional collaborations",
-                    "Development of a research agenda for the coming years"
-                  ].map((goal, index) => (
+                  {[1, 2, 3, 4, 5].map((num, index) => (
                     <motion.div
-                      key={index}
+                      key={num}
                       className="flex gap-3 items-start"
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -375,7 +307,7 @@ export default function App() {
                       viewport={{ once: true }}
                     >
                       <div className="w-1.5 h-1.5 rounded-full bg-slate-800 mt-2 flex-shrink-0" />
-                      <span className="text-slate-700">{goal}</span>
+                      <span className="text-slate-700">{t(`overview.goal${num}` as any)}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -392,15 +324,15 @@ export default function App() {
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-1 bg-slate-800" />
               <h2 className="text-5xl font-bold text-slate-900">
-                Topics of Interest
+                {t('topics.title')}
               </h2>
             </div>
-            <p className="text-slate-600 mb-12 text-lg ml-16">Topics include, but are not limited to:</p>
+            <p className="text-slate-600 mb-12 text-lg ml-16">{t('topics.subtitle')}</p>
           </AnimatedSection>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {topics.map((topic, index) => (
-              <AnimatedSection key={index} delay={index * 0.03}>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((num, index) => (
+              <AnimatedSection key={num} delay={index * 0.03}>
                 <motion.div
                   className="bg-white p-6 rounded-lg border border-slate-200 hover:border-slate-400 hover:shadow-md transition-all duration-300 h-full"
                   whileHover={{ y: -2 }}
@@ -408,7 +340,7 @@ export default function App() {
                   <div className="flex items-start gap-3">
                     <div className="w-1 h-1 rounded-full bg-slate-800 mt-2 flex-shrink-0" />
                     <p className="text-slate-700 leading-relaxed text-sm">
-                      {topic}
+                      {t(`topics.${num}` as any)}
                     </p>
                   </div>
                 </motion.div>
@@ -425,47 +357,50 @@ export default function App() {
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-1 bg-slate-800" />
               <h2 className="text-5xl font-bold text-slate-900">
-                Keynote Speakers
+                {t('keynotes.title')}
               </h2>
             </div>
-            <p className="text-slate-600 mb-16 text-lg ml-16">Leading experts in agentic systems and software engineering</p>
+            <p className="text-slate-600 mb-16 text-lg ml-16">{t('keynotes.subtitle')}</p>
           </AnimatedSection>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {keynotes.map((speaker, index) => (
-              <AnimatedSection key={index} delay={index * 0.1}>
-                <motion.div
-                  className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-500"
-                  whileHover={{ y: -8 }}
-                >
-                  {/* Image */}
-                  <div className="relative aspect-[3/4] overflow-hidden bg-slate-100">
-                    <motion.img
-                      src={speaker.image}
-                      alt={speaker.name}
-                      className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.6 }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
-                    
-                    {/* Topic on hover */}
-                    <motion.div
-                      className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500"
-                    >
-                      <p className="text-white font-medium text-sm">{speaker.topic}</p>
-                    </motion.div>
+            {/* Single Keynote Placeholder */}
+            <AnimatedSection delay={0.1}>
+              <motion.div
+                className="group bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-500 relative"
+                whileHover={{ y: -8 }}
+              >
+                {/* Blurred Placeholder Image */}
+                <div className="relative aspect-[3/4] overflow-hidden bg-slate-200">
+                  <div className="absolute inset-0 bg-gradient-to-br from-slate-300 to-slate-400 blur-xl" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-slate-500 text-center p-6">
+                      <div className="w-20 h-20 rounded-full bg-slate-300 mx-auto mb-4" />
+                      <div className="h-4 bg-slate-300 rounded mb-2 w-3/4 mx-auto" />
+                      <div className="h-3 bg-slate-300 rounded w-1/2 mx-auto" />
+                    </div>
                   </div>
+                </div>
 
-                  {/* Info */}
-                  <div className="p-6 bg-slate-50">
-                    <h3 className="text-lg font-semibold text-slate-900 mb-1">{speaker.name}</h3>
-                    <p className="text-slate-700 text-xs mb-1">{speaker.title}</p>
-                    <p className="text-slate-500 text-xs">{speaker.institution}</p>
+                {/* Info */}
+                <div className="p-6 bg-slate-50">
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-xs uppercase tracking-wider text-slate-500 mb-1">{t('keynotes.topic')}</p>
+                      <div className="h-3 bg-slate-200 rounded w-full mb-2" />
+                      <div className="h-3 bg-slate-200 rounded w-3/4" />
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-wider text-slate-500 mb-1">{t('keynotes.abstract')}</p>
+                      <div className="h-2 bg-slate-200 rounded w-full mb-1" />
+                      <div className="h-2 bg-slate-200 rounded w-full mb-1" />
+                      <div className="h-2 bg-slate-200 rounded w-2/3" />
+                    </div>
                   </div>
-                </motion.div>
-              </AnimatedSection>
-            ))}
+                  <p className="text-xs text-slate-500 italic mt-4 text-center">{t('keynotes.tba')}</p>
+                </div>
+              </motion.div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
@@ -477,7 +412,7 @@ export default function App() {
             <div className="flex items-center gap-4 mb-16">
               <div className="w-12 h-1 bg-slate-800" />
               <h2 className="text-5xl font-bold text-slate-900">
-                Important Dates
+                {t('dates.title')}
               </h2>
             </div>
           </AnimatedSection>
@@ -505,7 +440,7 @@ export default function App() {
             
             <AnimatedSection delay={0.5}>
               <p className="mt-8 text-slate-500 italic text-center">
-                All deadlines are 23:59 AoE (Anywhere on Earth)
+                {t('dates.aoe')}
               </p>
             </AnimatedSection>
           </div>
@@ -519,7 +454,7 @@ export default function App() {
             <div className="flex items-center gap-4 mb-16">
               <div className="w-12 h-1 bg-slate-800" />
               <h2 className="text-5xl font-bold text-slate-900">
-                Submission Guidelines
+                {t('submission.title')}
               </h2>
             </div>
           </AnimatedSection>
@@ -528,17 +463,17 @@ export default function App() {
             <div className="bg-slate-50 rounded-2xl p-10 border border-slate-200 space-y-8 mb-16">
               <div>
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  Authors must submit original work that has not been published elsewhere and is not currently under review. Papers may be written in Portuguese or English.
+                  {t('submission.p1')}
                 </p>
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  Submissions must be in Adobe Portable Document Format (PDF) and must strictly be formatted according to the{' '}
+                  {t('submission.p2')}{' '}
                   <a 
                     href="https://www.overleaf.com/read/cyhpwwkngcwk#baf5f5" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-slate-900 font-semibold underline hover:text-slate-600 transition-colors"
                   >
-                    CBSoft template
+                    {t('submission.template')}
                   </a>
                   {' '}(
                   <a 
@@ -547,33 +482,33 @@ export default function App() {
                     rel="noopener noreferrer"
                     className="text-slate-900 font-semibold underline hover:text-slate-600 transition-colors"
                   >
-                    download
+                    {t('submission.download')}
                   </a>
                   ).
                 </p>
 
-                <h3 className="text-xl font-semibold text-slate-900 mb-4">We invite the following types of submissions:</h3>
+                <h3 className="text-xl font-semibold text-slate-900 mb-4">{t('submission.types')}</h3>
                 <ul className="space-y-2 text-slate-700 mb-6">
                   <li className="flex gap-3">
                     <span>-</span>
-                    <span>Short papers (6 pages, including all figures, tables, and acknowledgments)</span>
+                    <span>{t('submission.type1')}</span>
                   </li>
                   <li className="flex gap-3">
                     <span>-</span>
-                    <span>Position and vision papers (4 pages, including all figures, tables, and acknowledgments)</span>
+                    <span>{t('submission.type2')}</span>
                   </li>
                   <li className="flex gap-3">
                     <span>-</span>
-                    <span>Industrial experience reports (4 pages, including all figures, tables, and acknowledgments)</span>
+                    <span>{t('submission.type3')}</span>
                   </li>
                   <li className="flex gap-3">
                     <span>-</span>
-                    <span>Tool, framework, or benchmark proposals (2 pages, including all figures, tables, and acknowledgments)</span>
+                    <span>{t('submission.type4')}</span>
                   </li>
                 </ul>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  Up to 1 additional page is allowed for references. Papers must be registered and submitted through the{' '}
+                  {t('submission.p3')}{' '}
                   <a 
                     href="https://jems3.sbc.org.br/?returnUrl=%2Fse4fp2026%2F" 
                     target="_blank" 
@@ -582,32 +517,32 @@ export default function App() {
                   >
                     JEMS 3
                   </a>
-                  {' '}system.
+                  {' '}{t('submission.p3').includes('sistema') ? 'sistema' : 'system'}.
                 </p>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  During submission registration, authors must provide the title, authors, abstract, topics of interest, and the language of the paper.
+                  {t('submission.p4')}
                 </p>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  The publication of accepted papers requires that at least one of the authors register for SE4AS/CBSoft 2026, in accordance with the registration policies of the event, and present the paper in person at the workshop. Papers that are not presented will not be included in the SE4AS proceedings.
+                  {t('submission.p5')}
                 </p>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  All submitted papers must comply with the{' '}
+                  {t('submission.p6')}{' '}
                   <a 
                     href="https://sol.sbc.org.br/index.php/indice/conduta" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-slate-900 font-semibold underline hover:text-slate-600 transition-colors"
                   >
-                    Code of Conduct for Authors in Publications of the Brazilian Computer Society (SBC)
+                    {t('submission.conduct')}
                   </a>
                   .
                 </p>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  Regarding the Use of AI or AI-Assisted Technologies, by submitting a paper, authors acknowledge compliance with the generative AI policies adopted by{' '}
+                  {t('submission.p7')}{' '}
                   <a 
                     href="https://cbsoft.sbc.org.br/2026/pt/symposiums/sbes/pesquisa/call/" 
                     target="_blank" 
@@ -616,7 +551,7 @@ export default function App() {
                   >
                     CBSoft/SBES
                   </a>
-                  , IEEE, ACM, and Springer.
+                  {t('submission.p8')}
                 </p>
 
                 <motion.div
@@ -624,7 +559,7 @@ export default function App() {
                   whileHover={{ scale: 1.01 }}
                 >
                   <p className="text-amber-900">
-                    <strong className="font-semibold">Note:</strong> Papers that fall outside the scope of the workshop or that do not comply with the required formatting and policies will be desk-rejected without undergoing the review process.
+                    <strong className="font-semibold">{t('submission.note')}</strong> {t('submission.noteText')}
                   </p>
                 </motion.div>
               </div>
@@ -633,40 +568,90 @@ export default function App() {
         </div>
       </section>
 
-      {/* Organization */}
-      <section id="organization" className="relative py-24 px-6 bg-slate-50">
+      {/* Committee Section */}
+      <section id="committee" className="relative py-24 px-6 bg-slate-50">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection>
             <div className="flex items-center gap-4 mb-16">
               <div className="w-12 h-1 bg-slate-800" />
               <h2 className="text-5xl font-bold text-slate-900">
-                Organization
+                {t('committee.title')}
               </h2>
             </div>
           </AnimatedSection>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            {organizationMembers.map((member, index) => (
-              <AnimatedSection key={index} delay={index * 0.08}>
-                <motion.div
-                  className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition-all duration-300"
-                  whileHover={{ y: -4 }}
-                >
-                  <div className="relative aspect-square overflow-hidden bg-slate-100">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-slate-900 text-sm mb-1">{member.name}</h3>
-                    <p className="text-slate-600 text-xs leading-relaxed">{member.institution}</p>
-                  </div>
-                </motion.div>
-              </AnimatedSection>
-            ))}
-          </div>
+          {/* Coordination Committee */}
+          <AnimatedSection delay={0.2}>
+            <div className="mb-16">
+              <h3 className="text-2xl font-semibold text-slate-900 mb-8">{t('committee.coordination')}</h3>
+              <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {committeeCoordination.map((member, index) => (
+                    <motion.div
+                      key={index}
+                      className="p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                    >
+                      <p className="font-semibold text-slate-900">{member.name}</p>
+                      <p className="text-slate-600 text-sm">{member.institution}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* Program Committee */}
+          <AnimatedSection delay={0.3}>
+            <div className="mb-16">
+              <h3 className="text-2xl font-semibold text-slate-900 mb-4">{t('committee.program')}</h3>
+              <p className="text-slate-600 mb-8 italic">{t('committee.programIntro')}</p>
+              <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {committeeProgram.map((member, index) => (
+                    <motion.div
+                      key={index}
+                      className="p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: (index % 12) * 0.05 }}
+                      viewport={{ once: true }}
+                    >
+                      <p className="font-semibold text-slate-900 text-sm">{member.name}</p>
+                      <p className="text-slate-600 text-xs">{member.institution}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* Organization Committee */}
+          <AnimatedSection delay={0.4}>
+            <div>
+              <h3 className="text-2xl font-semibold text-slate-900 mb-8">{t('committee.organization')}</h3>
+              <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {committeeOrganization.map((member, index) => (
+                    <motion.div
+                      key={index}
+                      className="p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                    >
+                      <p className="font-semibold text-slate-900">{member.name}</p>
+                      <p className="text-slate-600 text-sm">{member.institution}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -675,9 +660,9 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           {/* Sponsor Section */}
           <div className="mb-12 pb-12 border-b border-slate-800">
-            <h3 className="font-semibold mb-6 text-xl text-center">Sponsored By</h3>
+            <h3 className="font-semibold mb-6 text-xl text-center">{t('footer.sponsors')}</h3>
             <div className="flex justify-center">
-              <div className="bg-white rounded-xl p-5 w-60 flex items-center justify-center">
+              <div className="bg-white rounded-xl p-8 w-64 flex items-center justify-center">
                 <img
                   src="kunumi-agents4good.png"
                   alt="Sponsor"
@@ -697,47 +682,47 @@ export default function App() {
               />
               </div>
               <p className="text-slate-400 text-sm">
-                I Workshop on Software Engineering for Agentic Systems
+                {t('hero.title')}
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-4 text-lg">Quick Links</h3>
+              <h3 className="font-semibold mb-4 text-lg">{t('footer.quickLinks')}</h3>
               <div className="flex flex-col gap-2">
-                {['Overview', 'Topics', 'Keynotes', 'Important Dates', 'Submission'].map((link) => (
+                {(['overview', 'topics', 'keynotes', 'dates', 'submission', 'committee'] as const).map((link) => (
                   <a
                     key={link}
-                    href={`#${link.toLowerCase().replace(' ', '')}`}
-                    className="text-slate-400 hover:text-white transition-colors duration-200 text-sm"
+                    href={`#${link}`}
+                    className="text-slate-400 hover:text-white transition-colors duration-200 text-sm capitalize"
                   >
-                    {link}
+                   {t(`nav.${link}`)}
                   </a>
                 ))}
               </div>
             </div>
             <div>
-              <h3 className="font-semibold mb-4 text-lg">Contact</h3>
+              <h3 className="font-semibold mb-4 text-lg">{t('footer.contact')}</h3>
               <a 
                 href="https://www.google.com/maps/search/?api=1&query=IME-USP+Sao+Paulo+SP"
                 className="text-slate-400 hover:text-white transition-colors text-sm block mb-4 group"
               >
                 <div className="flex flex-col">
-                  <span>Co-located with CBSoft 2026</span>
+                  <span>{t('footer.colocated')}</span>
                   <span className="flex items-center gap-2">
                     <MapPin className="w-3 h-3 text-slate-500 group-hover:text-white transition-colors" />
-                    IME - USP, São Paulo, SP
+                    {t('hero.location')}
                   </span>
                 </div>
               </a>
               <a 
-                href="mailto:contact@se4as2026.org" 
+                href="mailto:workshop.se4as@gmail.com" 
                 className="text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-2"
               >
                 <Mail className="w-4 h-4" />
-                contact@se4as2026.org
+                workshop.se4as@gmail.com
               </a>
             </div>
             <div>
-              <h3 className="font-semibold mb-4 text-lg">Follow Us</h3>
+              <h3 className="font-semibold mb-4 text-lg">{t('footer.followUs')}</h3>
               <div className="flex gap-4">
               {/* Instagram (SVG Manual) */}
               <motion.a
@@ -799,10 +784,18 @@ export default function App() {
             </div>
           </div>
           <div className="border-t border-slate-800 pt-8 text-center text-slate-500 text-sm">
-            <p>© 2026 SE4AS. All rights reserved.</p>
+            <p>{t('footer.rights')}</p>
           </div>
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }
