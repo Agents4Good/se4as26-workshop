@@ -51,7 +51,7 @@ function AppContent() {
     "Human-in-the-loop and hybrid agentic systems",
     "Safety, ethics, and governance of agentic systems",
     "Empirical studies and industrial experiences with agentic systems",
-    "Applications of agentic systems in software, data science, education, healthcare, and defense"
+    "Applications of agentic systems in a range of areas, including data science, education, healthcare, and defense"
   ];
 
   const importantDates = [
@@ -80,6 +80,7 @@ function AppContent() {
     { name: "Eliane Araújo", institution: "UFCG" },
     { name: "Francisco Gomes", institution: "University of Gothenburg, SE" },
     { name: "Guilherme Avelino", institution: "UFPI" },
+    { name: "João Brunet", institution: "UFCG" },
     { name: "João Eduardo Montandon", institution: "UFMG" },
     { name: "Leandro Marinho", institution: "UFCG" },
     { name: "Marcelo D'Amorim", institution: "UFPE" },
@@ -529,9 +530,9 @@ function AppContent() {
                 </ul>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  Up to 1 additional page is allowed for references. Papers must be registered and submitted through the{' '}
+                  Papers must be registered and submitted through the{' '}
                   <a 
-                    href="https://jems3.sbc.org.br/?returnUrl=%2Fse4fp2026%2F" 
+                    href="https://jems3.sbc.org.br/se4as2026" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-slate-900 font-semibold underline hover:text-slate-600 transition-colors"
@@ -542,11 +543,30 @@ function AppContent() {
                 </p>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  During submission registration, authors must provide the title, authors, abstract, topics of interest, and the language of the paper.
+                SE4AS adopts a double-anonymous review process. Submission documents must omit the names and affiliations of the authors. 
+                Authors should follow standard anonymization practices; for reference, please consult the anonymization guidelines from the{' '}
+                  <a 
+                    href="https://cbsoft.sbc.org.br/2026/pt/symposiums/sbes/pesquisa/call/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-slate-900 font-semibold underline hover:text-slate-600 transition-colors"
+                  >
+                    SBES Call for Papers
+                  </a>
+                  {' '}.
                 </p>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  The publication of accepted papers requires that at least one of the authors register for SE4AS/CBSoft 2026, in accordance with the registration policies of the event, and present the paper in person at the workshop. Papers that are not presented will not be included in the SE4AS proceedings.
+                Submitted papers will be evaluated based on their relevance to the workshop, clarity, originality, and potential to stimulate discussion, considering the exploratory and interdisciplinary nature of the event.
+                </p>
+
+                <p className="text-slate-700 leading-relaxed mb-6">
+                  The publication of accepted papers requires that{' '}
+                  <strong className="font-semibold">
+                    at least one of the authors register for SE4AS/CBSoft 2026
+                  </strong>
+                  , in accordance with the registration policies of the event, and present the paper in person at the workshop. 
+                  Papers that are not presented will not be included in the SE4AS proceedings.
                 </p>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
@@ -583,6 +603,11 @@ function AppContent() {
                     <strong className="font-semibold">Note:</strong> Papers that fall outside the scope of the workshop or that do not comply with the required formatting and policies will be desk-rejected without undergoing the review process.
                   </p>
                 </motion.div>
+
+                <h3 className="text-xl font-semibold text-slate-900 mb-4">Distinguished Paper Award</h3>
+                <p className="text-slate-700 leading-relaxed mb-2">
+                A Distinguished Paper Award will be presented to the best paper selected by the Program  Committee.
+                </p>
               </div>
             </div>
           </AnimatedSection>
@@ -679,19 +704,19 @@ function AppContent() {
       {/* Footer */}
       <footer className="relative py-16 px-6 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto">
-          {/* Sponsor Section */}
+          {/* Sponsor Section 
           <div className="mb-12 pb-12 border-b border-slate-800">
             <h3 className="font-semibold mb-6 text-xl text-center">Sponsored By</h3>
             <div className="flex justify-center">
               <div className="bg-white rounded-xl p-8 w-64 flex items-center justify-center">
                 <img
-                  src="kunumi-agents4good.png"
+                  src="#"
                   alt="Sponsor"
                   className="max-h-full w-auto"
                 />
               </div>
             </div>
-          </div>
+          </div>*/}
 
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
@@ -745,7 +770,7 @@ function AppContent() {
             <div>
               <h3 className="font-semibold mb-4 text-lg">Follow Us</h3>
               <div className="flex gap-4">
-              {/* Instagram (SVG Manual) */}
+              {/* Instagram */}
               <motion.a
                 href="https://www.instagram.com/se4asworkshop/"
                 target="_blank"
@@ -764,7 +789,7 @@ function AppContent() {
                 </svg>
               </motion.a>
 
-              {/* X / Twitter (SVG Manual) */}
+              {/* X */}
               <motion.a
                 href="#"
                 target="_blank"
@@ -783,7 +808,7 @@ function AppContent() {
                 </svg>
               </motion.a>
 
-              {/* Linkedin (SVG Manual) */}
+              {/* Linkedin */}
               <motion.a
                 href="#"
                 target="_blank"
