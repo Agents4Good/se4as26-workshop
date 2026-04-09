@@ -543,6 +543,10 @@ function AppContent() {
                 </p>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
+                During submission registration, authors must provide the title, authors, abstract, topics of interest, and the language of the paper.
+                </p>
+
+                <p className="text-slate-700 leading-relaxed mb-6">
                 SE4AS adopts a double-anonymous review process. Submission documents must omit the names and affiliations of the authors. 
                 Authors should follow standard anonymization practices; for reference, please consult the anonymization guidelines from the{' '}
                   <a 
@@ -595,6 +599,11 @@ function AppContent() {
                   , IEEE, ACM, and Springer.
                 </p>
 
+                <h3 className="text-xl font-semibold text-slate-900 mb-4">Distinguished Paper Award</h3>
+                <p className="text-slate-700 leading-relaxed mb-2">
+                A Distinguished Paper Award will be presented to the best paper selected by the Program  Committee.
+                </p>
+
                 <motion.div
                   className="bg-amber-50 border border-amber-200 rounded-xl p-6"
                   whileHover={{ scale: 1.01 }}
@@ -603,11 +612,6 @@ function AppContent() {
                     <strong className="font-semibold">Note:</strong> Papers that fall outside the scope of the workshop or that do not comply with the required formatting and policies will be desk-rejected without undergoing the review process.
                   </p>
                 </motion.div>
-
-                <h3 className="text-xl font-semibold text-slate-900 mb-4">Distinguished Paper Award</h3>
-                <p className="text-slate-700 leading-relaxed mb-2">
-                A Distinguished Paper Award will be presented to the best paper selected by the Program  Committee.
-                </p>
               </div>
             </div>
           </AnimatedSection>
