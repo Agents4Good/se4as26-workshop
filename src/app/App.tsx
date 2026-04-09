@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'motion/react';
-import { Calendar, MapPin, ChevronDown, ArrowRight, Mail, ExternalLink } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'motion/react';
+import { Calendar, MapPin, ChevronDown, ArrowRight, Mail, ExternalLink, Menu, X } from 'lucide-react';
 import { Badge } from './components/ui/badge';
 import { Button } from './components/ui/button';
 import { GeometricBackground } from './components/GeometricBackground';
@@ -8,7 +8,7 @@ import { SectionConnector } from './components/SectionConnector';
 import { TypewriterText } from './components/TypewriterText';
 import { Countdown } from './components/Countdown';
 
-
+// Componente de Seção Animada
 function AnimatedSection({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -29,6 +29,7 @@ function AnimatedSection({ children, className = '', delay = 0 }: { children: Re
 function AppContent() {
   const { scrollYProgress } = useScroll();
   const heroRef = useRef<HTMLDivElement>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Smooth scroll
   useEffect(() => {
@@ -37,6 +38,8 @@ function AppContent() {
       document.documentElement.style.scrollBehavior = 'auto';
     };
   }, []);
+
+  const navItems = ['overview', 'topics', 'keynotes', 'dates', 'submission', 'committee'];
 
   const topics = [
     "Software engineering techniques and methodologies for agentic systems",
@@ -102,7 +105,6 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
-      {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-slate-800 via-slate-600 to-slate-800 origin-left z-50"
         style={{ scaleX: scrollYProgress }}
@@ -117,149 +119,160 @@ function AppContent() {
       >
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <motion.div
-              className="flex items-center gap-3"
-              whileHover={{ scale: 1.02 }}
-            >
+            <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.02 }}>
               <div className="w-16 h-12 flex items-center justify-center">
-                <img 
-                  src="logo-se4as.svg" 
-                  alt="SE4AS Logo" 
-                  className="w-full h-full object-contain scale-175"
-                />
+                <img src="logo-se4as.svg" alt="SE4AS Logo" className="w-full h-full object-contain scale-175" />
               </div>
             </motion.div>
 
+            {/* Desktop Menu */}
             <div className="hidden md:flex gap-8">
-              {['overview', 'topics', 'keynotes', 'dates', 'submission', 'committee'].map((item) => (
+              {navItems.map((item) => (
                 <motion.a
                   key={item}
                   href={`#${item}`}
                   className="text-slate-600 hover:text-slate-900 transition-colors duration-200 capitalize text-sm font-medium"
                   whileHover={{ y: -1 }}
-                  whileTap={{ scale: 0.98 }}
                 >
                   {item}
                 </motion.a>
               ))}
             </div>
+
+            {/* Mobile Menu Button */}
+            <button 
+              className="md:hidden p-2 text-slate-600 hover:text-slate-900"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-white border-b border-slate-200 overflow-hidden"
+            >
+              <div className="flex flex-col p-6 gap-4">
+                {navItems.map((item) => (
+                  <a
+                    key={item}
+                    href={`#${item}`}
+                    className="text-slate-600 text-lg font-medium capitalize"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.nav>
 
-      {/* Hero Section - Dark Theme */}
+      {/* Hero Section */}
       <motion.section
         ref={heroRef}
         style={{ y: heroY, opacity: heroOpacity }}
-        className="relative min-h-screen flex items-center justify-center px-6 pt-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
+        className="relative min-h-screen flex items-center justify-center px-6 pt-32 pb-20 md:pt-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
       >
         <GeometricBackground isDark={true} />
 
         <div className="max-w-7xl mx-auto relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="text-center lg:text-left">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                <Badge className="mb-6 bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700">
+                <Badge className="mb-6 bg-slate-800 text-slate-200 border-slate-700">
                   Co-located with CBSoft 2026
                 </Badge>
               </motion.div>
 
-              <motion.h1
-                className="text-6xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight"
+              <motion.img
+                src="logo-branca.png"
+                alt="SE4AS 2026 Logo"
+                className="h-20 md:h-32 w-auto mb-6 object-contain mx-auto lg:mx-0"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-              >
-                SE4AS 2026
-              </motion.h1>
+              />
 
               <motion.div
-                className="text-xl md:text-2xl text-slate-300 mb-12 leading-relaxed h-16"
+                className="text-lg md:text-2xl text-slate-300 mb-12 leading-relaxed min-h-[4rem]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <TypewriterText
-                  text="I Workshop on Software Engineering for Agentic Systems"
-                  delay={1000}
-                  speed={50}
-                />
+                <TypewriterText text="I Workshop on Software Engineering for Agentic Systems" delay={1000} speed={50} />
               </motion.div>
 
               <motion.div
-                className="flex flex-col sm:flex-row gap-4 text-slate-300 mb-12"
+                className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 text-slate-300 mb-12"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1.6 }}
               >
-                <div className="flex items-center gap-3 bg-slate-800/50 backdrop-blur-sm px-5 py-3 rounded-lg border border-slate-700">
+                <div className="flex items-center justify-center gap-3 bg-slate-800/50 backdrop-blur-sm px-5 py-3 rounded-lg border border-slate-700">
                   <Calendar className="w-4 h-4 text-slate-400" />
-                  <span className="text-sm">September 8, 2026</span>
+                  <span className="text-sm font-medium">September 8, 2026</span>
                 </div>
                 
                 <motion.a 
-                    href="https://www.google.com/maps/search/?api=1&query=IME-USP+Sao+Paulo+SP"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 bg-slate-800/50 backdrop-blur-sm px-5 py-3 rounded-lg border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 transition-all duration-300 group"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <MapPin className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
-                    <span className="text-sm">IME - USP, São Paulo, SP</span>
-                  </motion.a>
-                  
+                  href="https://www.google.com/maps/search/?api=1&query=IME-USP+Sao+Paulo+SP"
+                  target="_blank"
+                  className="flex items-center justify-center gap-3 bg-slate-800/50 backdrop-blur-sm px-5 py-3 rounded-lg border border-slate-700 text-slate-300 hover:text-white transition-all group"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <MapPin className="w-4 h-4 text-slate-400 group-hover:text-white" />
+                  <span className="text-sm font-medium">IME - USP, São Paulo, SP</span>
+                </motion.a>
               </motion.div>
 
               <motion.div
-                className="flex flex-wrap gap-4"
+                className="flex flex-wrap justify-center lg:justify-start gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 2 }}
               >
-                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                  <Button 
-                    className="bg-slate-100 hover:bg-white text-slate-900 transition-all duration-300 px-8 py-6 shadow-lg"
-                    onClick={() => {
-                      document.getElementById('submission')?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  >
-                    Submit Your Paper
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                  <Button 
-                    className="bg-slate-100 hover:bg-white text-slate-900 transition-all duration-300 px-8 py-6 shadow-lg"
-                    onClick={() => window.open('https://cbsoft.sbc.org.br/2026/pt/cbsoft/', '_blank')}
-                  >
-                    CBSoft 2026 Information
-                    <ExternalLink className="w-4 h-4 ml-2" />
-                  </Button>
-                </motion.div>
+                <Button 
+                  className="bg-slate-100 hover:bg-white text-slate-900 px-8 py-6 w-full sm:w-auto"
+                  onClick={() => document.getElementById('submission')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  Submit Your Paper <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+                <Button 
+                  className="bg-slate-100 hover:bg-white text-slate-900 px-8 py-6 w-full sm:w-auto"
+                  onClick={() => window.open('https://cbsoft.sbc.org.br/2026/pt/cbsoft/', '_blank')}
+                >
+                  CBSoft 2026 <ExternalLink className="w-4 h-4 ml-2" />
+                </Button>
               </motion.div>
             </div>
 
-            {/* Countdown */}
+            {/* Countdown - Ajustado para centralizar no mobile */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 1 }}
+              className="flex justify-center items-center"
             >
               <Countdown />
             </motion.div>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
         <motion.div
-          className="absolute bottom-12 left-1/2 -translate-x-1/2"
+          className="absolute bottom-6 md:bottom-12 left-1/2 -translate-x-1/2"
           animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 2, repeat: Infinity }}
         >
           <ChevronDown className="w-6 h-6 text-slate-400" />
         </motion.div>
