@@ -7,9 +7,6 @@ import { GeometricBackground } from './components/GeometricBackground';
 import { SectionConnector } from './components/SectionConnector';
 import { TypewriterText } from './components/TypewriterText';
 import { Countdown } from './components/Countdown';
-import { EventLogo } from './components/EventLogo';
-import { LanguageToggle } from './components/LanguageToggle';
-import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 
 
 function AnimatedSection({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -32,7 +29,6 @@ function AnimatedSection({ children, className = '', delay = 0 }: { children: Re
 function AppContent() {
   const { scrollYProgress } = useScroll();
   const heroRef = useRef<HTMLDivElement>(null);
-  const { t, language } = useLanguage();
 
   // Smooth scroll
   useEffect(() => {
@@ -42,12 +38,28 @@ function AppContent() {
     };
   }, []);
 
+  const topics = [
+    "Software engineering techniques and methodologies for agentic systems",
+    "Requirements engineering for agentic systems",
+    "Architectures for agentic systems (e.g., single-agent, multi-agent, hierarchical)",
+    "Evaluation and benchmarking of agentic systems",
+    "Testing, validation, and verification of agentic systems",
+    "Observability, monitoring, and debugging of agentic systems",
+    "Tool use and integration in agent workflows",
+    "Memory, planning, and reasoning mechanisms",
+    "Coordination, communication, and collaboration in agentic systems",
+    "Human-in-the-loop and hybrid agentic systems",
+    "Safety, ethics, and governance of agentic systems",
+    "Empirical studies and industrial experiences with agentic systems",
+    "Applications of agentic systems in software, data science, education, healthcare, and defense"
+  ];
+
   const importantDates = [
-    { label: t('dates.registration'), date: "July 3, 2026" },
-    { label: t('dates.submission'), date: "July 10, 2026" },
-    { label: t('dates.notification'), date: "August 3, 2026" },
-    { label: t('dates.camera'), date: "August 10, 2026" },
-    { label: t('dates.workshop'), date: "September 8, 2026" }
+    { label: "Paper registration", date: "July 3, 2026" },
+    { label: "Paper submission", date: "July 10, 2026" },
+    { label: "Author notification", date: "August 3, 2026" },
+    { label: "Camera-ready", date: "August 10, 2026" },
+    { label: "Workshop date", date: "September 8, 2026" }
   ];
 
   const committeeCoordination = [
@@ -117,8 +129,8 @@ function AppContent() {
               </div>
             </motion.div>
 
-            <div className="hidden md:flex items-center gap-8">
-              {(['overview', 'topics', 'keynotes', 'dates', 'submission', 'committee'] as const).map((item) => (
+            <div className="hidden md:flex gap-8">
+              {['overview', 'topics', 'keynotes', 'dates', 'submission', 'committee'].map((item) => (
                 <motion.a
                   key={item}
                   href={`#${item}`}
@@ -126,10 +138,9 @@ function AppContent() {
                   whileHover={{ y: -1 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  {t(`nav.${item}`)}
+                  {item}
                 </motion.a>
               ))}
-              <LanguageToggle />
             </div>
           </div>
         </div>
@@ -152,7 +163,7 @@ function AppContent() {
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
                 <Badge className="mb-6 bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700">
-                  {t('hero.colocated')}
+                  Co-located with CBSoft 2026
                 </Badge>
               </motion.div>
 
@@ -172,8 +183,7 @@ function AppContent() {
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
                 <TypewriterText
-                  key={language}
-                  text={t('hero.title')}
+                  text="I Workshop on Software Engineering for Agentic Systems"
                   delay={1000}
                   speed={50}
                 />
@@ -187,7 +197,7 @@ function AppContent() {
               >
                 <div className="flex items-center gap-3 bg-slate-800/50 backdrop-blur-sm px-5 py-3 rounded-lg border border-slate-700">
                   <Calendar className="w-4 h-4 text-slate-400" />
-                  <span className="text-sm">{t('hero.date')}</span>
+                  <span className="text-sm">September 8, 2026</span>
                 </div>
                 
                 <motion.a 
@@ -199,7 +209,7 @@ function AppContent() {
                     whileTap={{ scale: 0.98 }}
                   >
                     <MapPin className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
-                    <span className="text-sm">{t('hero.location')}</span>
+                    <span className="text-sm">IME - USP, São Paulo, SP</span>
                   </motion.a>
                   
               </motion.div>
@@ -217,7 +227,7 @@ function AppContent() {
                       document.getElementById('submission')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                   >
-                    {t('hero.submit')}
+                    Submit Your Paper
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </motion.div>
@@ -226,7 +236,7 @@ function AppContent() {
                     className="bg-slate-100 hover:bg-white text-slate-900 transition-all duration-300 px-8 py-6 shadow-lg"
                     onClick={() => window.open('https://cbsoft.sbc.org.br/2026/pt/cbsoft/', '_blank')}
                   >
-                    {t('hero.cbsoft')}
+                    CBSoft 2026 Information
                     <ExternalLink className="w-4 h-4 ml-2" />
                   </Button>
                 </motion.div>
@@ -268,7 +278,7 @@ function AppContent() {
             <div className="flex items-center gap-4 mb-12">
               <div className="w-12 h-1 bg-slate-800" />
               <h2 className="text-5xl font-bold text-slate-900">
-                {t('overview.title')}
+                Overview
               </h2>
             </div>
           </AnimatedSection>
@@ -277,13 +287,17 @@ function AppContent() {
             <AnimatedSection delay={0.2}>
               <div className="space-y-6">
                 <p className="text-slate-700 leading-relaxed text-lg">
-                  {t('overview.p1')}
+                  In recent years, advances in foundation models, Large Language Models (LLMs), 
+                  and autonomous systems have driven the emergence of Agentic Systems—systems composed of agents capable of perception, 
+                  planning, decision-making, and continuous action in dynamic and uncertain environments.
                 </p>
                 <p className="text-slate-700 leading-relaxed text-lg">
-                  {t('overview.p2')}
+                  These systems introduce challenges that differ from traditional LLM-based applications, as they maintain state, 
+                  interact with external tools, coordinate multiple entities, and operate in an iterative, goal-oriented manner.
                 </p>
                 <p className="text-slate-700 leading-relaxed text-lg">
-                  {t('overview.p3')}
+                  Despite their rapid growth, there are still methodological, architectural, and software engineering gaps that hinder the robust, 
+                  reliable, and responsible development of these systems.
                 </p>
               </div>
             </AnimatedSection>
@@ -291,15 +305,22 @@ function AppContent() {
             <AnimatedSection delay={0.3}>
               <div className="bg-slate-50 rounded-2xl p-10 border border-slate-200 shadow-sm">
                 <h3 className="text-2xl font-semibold text-slate-900 mb-6">
-                  {t('overview.goals')}
+                  Workshop Goals
                 </h3>
                 <p className="text-slate-700 mb-8 leading-relaxed">
-                  {t('overview.goalsText')}
+                  SE4AS aims to consolidate a scientific and technical agenda by bringing together 
+                  researchers and industry practitioners interested in Software Engineering for Agentic Systems.
                 </p>
                 <div className="space-y-4">
-                  {[1, 2, 3, 4, 5].map((num, index) => (
+                  {[
+                    "Identification of open research challenges",
+                    "Consolidation of a common vocabulary in Agentic Engineering",
+                    "Discussion of architectural and methodological approaches",
+                    "Encouragement of inter-institutional collaborations",
+                    "Development of a research agenda for the coming years"
+                  ].map((goal, index) => (
                     <motion.div
-                      key={num}
+                      key={index}
                       className="flex gap-3 items-start"
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -307,7 +328,7 @@ function AppContent() {
                       viewport={{ once: true }}
                     >
                       <div className="w-1.5 h-1.5 rounded-full bg-slate-800 mt-2 flex-shrink-0" />
-                      <span className="text-slate-700">{t(`overview.goal${num}` as any)}</span>
+                      <span className="text-slate-700">{goal}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -324,15 +345,15 @@ function AppContent() {
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-1 bg-slate-800" />
               <h2 className="text-5xl font-bold text-slate-900">
-                {t('topics.title')}
+                Topics of Interest
               </h2>
             </div>
-            <p className="text-slate-600 mb-12 text-lg ml-16">{t('topics.subtitle')}</p>
+            <p className="text-slate-600 mb-12 text-lg ml-16">Topics include, but are not limited to:</p>
           </AnimatedSection>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((num, index) => (
-              <AnimatedSection key={num} delay={index * 0.03}>
+            {topics.map((topic, index) => (
+              <AnimatedSection key={index} delay={index * 0.03}>
                 <motion.div
                   className="bg-white p-6 rounded-lg border border-slate-200 hover:border-slate-400 hover:shadow-md transition-all duration-300 h-full"
                   whileHover={{ y: -2 }}
@@ -340,7 +361,7 @@ function AppContent() {
                   <div className="flex items-start gap-3">
                     <div className="w-1 h-1 rounded-full bg-slate-800 mt-2 flex-shrink-0" />
                     <p className="text-slate-700 leading-relaxed text-sm">
-                      {t(`topics.${num}` as any)}
+                      {topic}
                     </p>
                   </div>
                 </motion.div>
@@ -357,10 +378,10 @@ function AppContent() {
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-1 bg-slate-800" />
               <h2 className="text-5xl font-bold text-slate-900">
-                {t('keynotes.title')}
+                Keynote Speakers
               </h2>
             </div>
-            <p className="text-slate-600 mb-16 text-lg ml-16">{t('keynotes.subtitle')}</p>
+            <p className="text-slate-600 mb-16 text-lg ml-16">Leading experts in agentic systems and software engineering</p>
           </AnimatedSection>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -386,18 +407,18 @@ function AppContent() {
                 <div className="p-6 bg-slate-50">
                   <div className="space-y-3">
                     <div>
-                      <p className="text-xs uppercase tracking-wider text-slate-500 mb-1">{t('keynotes.topic')}</p>
+                      <p className="text-xs uppercase tracking-wider text-slate-500 mb-1">Topic</p>
                       <div className="h-3 bg-slate-200 rounded w-full mb-2" />
                       <div className="h-3 bg-slate-200 rounded w-3/4" />
                     </div>
                     <div>
-                      <p className="text-xs uppercase tracking-wider text-slate-500 mb-1">{t('keynotes.abstract')}</p>
+                      <p className="text-xs uppercase tracking-wider text-slate-500 mb-1">Abstract</p>
                       <div className="h-2 bg-slate-200 rounded w-full mb-1" />
                       <div className="h-2 bg-slate-200 rounded w-full mb-1" />
                       <div className="h-2 bg-slate-200 rounded w-2/3" />
                     </div>
                   </div>
-                  <p className="text-xs text-slate-500 italic mt-4 text-center">{t('keynotes.tba')}</p>
+                  <p className="text-xs text-slate-500 italic mt-4 text-center">To be announced</p>
                 </div>
               </motion.div>
             </AnimatedSection>
@@ -412,7 +433,7 @@ function AppContent() {
             <div className="flex items-center gap-4 mb-16">
               <div className="w-12 h-1 bg-slate-800" />
               <h2 className="text-5xl font-bold text-slate-900">
-                {t('dates.title')}
+                Important Dates
               </h2>
             </div>
           </AnimatedSection>
@@ -440,7 +461,7 @@ function AppContent() {
             
             <AnimatedSection delay={0.5}>
               <p className="mt-8 text-slate-500 italic text-center">
-                {t('dates.aoe')}
+                All deadlines are 23:59 AoE (Anywhere on Earth)
               </p>
             </AnimatedSection>
           </div>
@@ -454,7 +475,7 @@ function AppContent() {
             <div className="flex items-center gap-4 mb-16">
               <div className="w-12 h-1 bg-slate-800" />
               <h2 className="text-5xl font-bold text-slate-900">
-                {t('submission.title')}
+                Submission Guidelines
               </h2>
             </div>
           </AnimatedSection>
@@ -463,17 +484,17 @@ function AppContent() {
             <div className="bg-slate-50 rounded-2xl p-10 border border-slate-200 space-y-8 mb-16">
               <div>
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  {t('submission.p1')}
+                  Authors must submit original work that has not been published elsewhere and is not currently under review. Papers may be written in Portuguese or English.
                 </p>
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  {t('submission.p2')}{' '}
+                  Submissions must be in Adobe Portable Document Format (PDF) and must strictly be formatted according to the{' '}
                   <a 
                     href="https://www.overleaf.com/read/cyhpwwkngcwk#baf5f5" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-slate-900 font-semibold underline hover:text-slate-600 transition-colors"
                   >
-                    {t('submission.template')}
+                    CBSoft template
                   </a>
                   {' '}(
                   <a 
@@ -482,33 +503,33 @@ function AppContent() {
                     rel="noopener noreferrer"
                     className="text-slate-900 font-semibold underline hover:text-slate-600 transition-colors"
                   >
-                    {t('submission.download')}
+                    download
                   </a>
                   ).
                 </p>
 
-                <h3 className="text-xl font-semibold text-slate-900 mb-4">{t('submission.types')}</h3>
+                <h3 className="text-xl font-semibold text-slate-900 mb-4">We invite the following types of submissions:</h3>
                 <ul className="space-y-2 text-slate-700 mb-6">
                   <li className="flex gap-3">
                     <span>-</span>
-                    <span>{t('submission.type1')}</span>
+                    <span>Short papers (6 pages, including all figures, tables, and acknowledgments)</span>
                   </li>
                   <li className="flex gap-3">
                     <span>-</span>
-                    <span>{t('submission.type2')}</span>
+                    <span>Position and vision papers (4 pages, including all figures, tables, and acknowledgments)</span>
                   </li>
                   <li className="flex gap-3">
                     <span>-</span>
-                    <span>{t('submission.type3')}</span>
+                    <span>Industrial experience reports (4 pages, including all figures, tables, and acknowledgments)</span>
                   </li>
                   <li className="flex gap-3">
                     <span>-</span>
-                    <span>{t('submission.type4')}</span>
+                    <span>Tool, framework, or benchmark proposals (2 pages, including all figures, tables, and acknowledgments)</span>
                   </li>
                 </ul>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  {t('submission.p3')}{' '}
+                  Up to 1 additional page is allowed for references. Papers must be registered and submitted through the{' '}
                   <a 
                     href="https://jems3.sbc.org.br/?returnUrl=%2Fse4fp2026%2F" 
                     target="_blank" 
@@ -517,32 +538,32 @@ function AppContent() {
                   >
                     JEMS 3
                   </a>
-                  {' '}{t('submission.p3').includes('sistema') ? 'sistema' : 'system'}.
+                  {' '}system.
                 </p>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  {t('submission.p4')}
+                  During submission registration, authors must provide the title, authors, abstract, topics of interest, and the language of the paper.
                 </p>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  {t('submission.p5')}
+                  The publication of accepted papers requires that at least one of the authors register for SE4AS/CBSoft 2026, in accordance with the registration policies of the event, and present the paper in person at the workshop. Papers that are not presented will not be included in the SE4AS proceedings.
                 </p>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  {t('submission.p6')}{' '}
+                  All submitted papers must comply with the{' '}
                   <a 
                     href="https://sol.sbc.org.br/index.php/indice/conduta" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-slate-900 font-semibold underline hover:text-slate-600 transition-colors"
                   >
-                    {t('submission.conduct')}
+                    Code of Conduct for Authors in Publications of the Brazilian Computer Society (SBC)
                   </a>
                   .
                 </p>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
-                  {t('submission.p7')}{' '}
+                  Regarding the Use of AI or AI-Assisted Technologies, by submitting a paper, authors acknowledge compliance with the generative AI policies adopted by{' '}
                   <a 
                     href="https://cbsoft.sbc.org.br/2026/pt/symposiums/sbes/pesquisa/call/" 
                     target="_blank" 
@@ -551,7 +572,7 @@ function AppContent() {
                   >
                     CBSoft/SBES
                   </a>
-                  {t('submission.p8')}
+                  , IEEE, ACM, and Springer.
                 </p>
 
                 <motion.div
@@ -559,7 +580,7 @@ function AppContent() {
                   whileHover={{ scale: 1.01 }}
                 >
                   <p className="text-amber-900">
-                    <strong className="font-semibold">{t('submission.note')}</strong> {t('submission.noteText')}
+                    <strong className="font-semibold">Note:</strong> Papers that fall outside the scope of the workshop or that do not comply with the required formatting and policies will be desk-rejected without undergoing the review process.
                   </p>
                 </motion.div>
               </div>
@@ -575,7 +596,7 @@ function AppContent() {
             <div className="flex items-center gap-4 mb-16">
               <div className="w-12 h-1 bg-slate-800" />
               <h2 className="text-5xl font-bold text-slate-900">
-                {t('committee.title')}
+              Committee
               </h2>
             </div>
           </AnimatedSection>
@@ -583,7 +604,7 @@ function AppContent() {
           {/* Coordination Committee */}
           <AnimatedSection delay={0.2}>
             <div className="mb-16">
-              <h3 className="text-2xl font-semibold text-slate-900 mb-8">{t('committee.coordination')}</h3>
+              <h3 className="text-2xl font-semibold text-slate-900 mb-8">Program Chairs</h3>
               <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {committeeCoordination.map((member, index) => (
@@ -607,8 +628,8 @@ function AppContent() {
           {/* Program Committee */}
           <AnimatedSection delay={0.3}>
             <div className="mb-16">
-              <h3 className="text-2xl font-semibold text-slate-900 mb-4">{t('committee.program')}</h3>
-              <p className="text-slate-600 mb-8 italic">{t('committee.programIntro')}</p>
+              <h3 className="text-2xl font-semibold text-slate-900 mb-4">Program Committee</h3>
+              <p className="text-slate-600 mb-8 italic">The program committee is being formed, but already has the support of the following researchers:</p>
               <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                   {committeeProgram.map((member, index) => (
@@ -632,7 +653,7 @@ function AppContent() {
           {/* Organization Committee */}
           <AnimatedSection delay={0.4}>
             <div>
-              <h3 className="text-2xl font-semibold text-slate-900 mb-8">{t('committee.organization')}</h3>
+              <h3 className="text-2xl font-semibold text-slate-900 mb-8">Organization Committee</h3>
               <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {committeeOrganization.map((member, index) => (
@@ -660,7 +681,7 @@ function AppContent() {
         <div className="max-w-7xl mx-auto">
           {/* Sponsor Section */}
           <div className="mb-12 pb-12 border-b border-slate-800">
-            <h3 className="font-semibold mb-6 text-xl text-center">{t('footer.sponsors')}</h3>
+            <h3 className="font-semibold mb-6 text-xl text-center">Sponsored By</h3>
             <div className="flex justify-center">
               <div className="bg-white rounded-xl p-8 w-64 flex items-center justify-center">
                 <img
@@ -682,11 +703,11 @@ function AppContent() {
               />
               </div>
               <p className="text-slate-400 text-sm">
-                {t('hero.title')}
+              I Workshop sobre Engenharia de Software para Sistemas Agentes
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-4 text-lg">{t('footer.quickLinks')}</h3>
+              <h3 className="font-semibold mb-4 text-lg">Quick Links</h3>
               <div className="flex flex-col gap-2">
                 {(['overview', 'topics', 'keynotes', 'dates', 'submission', 'committee'] as const).map((link) => (
                   <a
@@ -694,22 +715,22 @@ function AppContent() {
                     href={`#${link}`}
                     className="text-slate-400 hover:text-white transition-colors duration-200 text-sm capitalize"
                   >
-                   {t(`nav.${link}`)}
+                   {link}
                   </a>
                 ))}
               </div>
             </div>
             <div>
-              <h3 className="font-semibold mb-4 text-lg">{t('footer.contact')}</h3>
+              <h3 className="font-semibold mb-4 text-lg">Contact</h3>
               <a 
                 href="https://www.google.com/maps/search/?api=1&query=IME-USP+Sao+Paulo+SP"
                 className="text-slate-400 hover:text-white transition-colors text-sm block mb-4 group"
               >
                 <div className="flex flex-col">
-                  <span>{t('footer.colocated')}</span>
+                  <span>Co-located with CBSoft 2026</span>
                   <span className="flex items-center gap-2">
                     <MapPin className="w-3 h-3 text-slate-500 group-hover:text-white transition-colors" />
-                    {t('hero.location')}
+                    IME - USP, São Paulo, SP
                   </span>
                 </div>
               </a>
@@ -722,7 +743,7 @@ function AppContent() {
               </a>
             </div>
             <div>
-              <h3 className="font-semibold mb-4 text-lg">{t('footer.followUs')}</h3>
+              <h3 className="font-semibold mb-4 text-lg">Follow Us</h3>
               <div className="flex gap-4">
               {/* Instagram (SVG Manual) */}
               <motion.a
@@ -784,7 +805,7 @@ function AppContent() {
             </div>
           </div>
           <div className="border-t border-slate-800 pt-8 text-center text-slate-500 text-sm">
-            <p>{t('footer.rights')}</p>
+            <p>© 2026 SE4AS. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -794,8 +815,6 @@ function AppContent() {
 
 export default function App() {
   return (
-    <LanguageProvider>
       <AppContent />
-    </LanguageProvider>
   );
 }

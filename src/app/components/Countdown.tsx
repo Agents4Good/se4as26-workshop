@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { useLanguage } from '../contexts/LanguageContext';
 
 export function Countdown() {
-  const { t } = useLanguage();
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -51,14 +49,14 @@ export function Countdown() {
 
   return (
     <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
-      <h3 className="text-white text-xl font-semibold mb-6 text-center">{t('hero.countdown')}</h3>
+      <h3 className="text-white text-xl font-semibold mb-6 text-center">Countdown to SE4AS 2026</h3>
       
       <div className="grid grid-cols-4 gap-4 mb-6">
         {[
-          { value: timeLeft.days, label: t('hero.days') },
-          { value: timeLeft.hours, label: t('hero.hours') },
-          { value: timeLeft.minutes, label: t('hero.minutes') },
-          { value: timeLeft.seconds, label: t('hero.seconds') }
+          { value: timeLeft.days, label: 'Days' },
+          { value: timeLeft.hours, label: 'Hours' },
+          { value: timeLeft.minutes, label: 'Minutes' },
+          { value: timeLeft.seconds, label: 'Seconds' }
         ].map((item, index) => (
           <motion.div
             key={item.label}
@@ -84,7 +82,7 @@ export function Countdown() {
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
           <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
         </svg>
-        {t('hero.addCalendar')}
+        Add to Google Calendar
       </button>
     </div>
   );
