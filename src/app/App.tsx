@@ -587,11 +587,6 @@ function AppContent() {
                   , IEEE, ACM, and Springer.
                 </p>
 
-                <h3 className="text-xl font-semibold text-slate-900 mb-4">Distinguished Paper Award</h3>
-                <p className="text-slate-700 leading-relaxed mb-2">
-                A Distinguished Paper Award will be presented to the best paper selected by the Program  Committee.
-                </p>
-
                 <motion.div
                   className="bg-amber-50 border border-amber-200 rounded-xl p-6"
                   whileHover={{ scale: 1.01 }}
@@ -600,6 +595,12 @@ function AppContent() {
                     <strong className="font-semibold">Note:</strong> Papers that fall outside the scope of the workshop or that do not comply with the required formatting and policies will be desk-rejected without undergoing the review process.
                   </p>
                 </motion.div>
+                <div className="border-t border-slate-200 mt-6 pt-6">
+                  <h3 className="text-xl font-semibold text-slate-900 mb-4">Distinguished Paper Award</h3>
+                  <p className="text-slate-700 leading-relaxed mb-2">
+                  A Distinguished Paper Award will be presented to the best paper selected by the Program  Committee.
+                  </p>
+                </div>
               </div>
             </div>
           </AnimatedSection>
