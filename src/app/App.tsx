@@ -31,7 +31,6 @@ function AppContent() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Smooth scroll
   useEffect(() => {
     document.documentElement.style.scrollBehavior = 'smooth';
     return () => {
@@ -119,7 +118,7 @@ function AppContent() {
       >
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.02 }}>
+            <motion.div className="flex items-center gap-3 pl-2 sm:pl-0" whileHover={{ scale: 1.02 }}>
               <div className="w-16 h-12 flex items-center justify-center">
                 <img src="logo-se4as.svg" alt="SE4AS Logo" className="w-full h-full object-contain scale-175" />
               </div>
@@ -167,12 +166,14 @@ function AppContent() {
                     onClick={(e) => {
                       e.preventDefault();
                     
-                      const section = document.getElementById(item);
-                      if (section) {
-                        section.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    
                       setIsMenuOpen(false);
+                    
+                      setTimeout(() => {
+                        const section = document.getElementById(item);
+                        if (section) {
+                          section.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }, 300);
                     }}
                   >
                     {item}
@@ -266,7 +267,7 @@ function AppContent() {
               </motion.div>
             </div>
 
-            {/* Countdown - Ajustado para centralizar no mobile */}
+            {/* Countdown */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
