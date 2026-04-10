@@ -164,7 +164,16 @@ function AppContent() {
                     key={item}
                     href={`#${item}`}
                     className="text-slate-600 text-lg font-medium capitalize"
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                    
+                      const section = document.getElementById(item);
+                      if (section) {
+                        section.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    
+                      setIsMenuOpen(false);
+                    }}
                   >
                     {item}
                   </a>
@@ -284,7 +293,7 @@ function AppContent() {
       </div>
 
       {/* Overview Section - Light Theme */}
-      <section id="overview" className="relative py-24 px-6 bg-white">
+      <section id="overview" className="scroll-mt-24 relative py-24 px-6 bg-white">
         <GeometricBackground isDark={false} />
         
         <div className="max-w-7xl mx-auto relative z-10">
@@ -353,7 +362,7 @@ function AppContent() {
       </section>
 
       {/* Topics Section */}
-      <section id="topics" className="relative py-24 px-6 bg-slate-50">
+      <section id="topics" className="scroll-mt-24 relative py-24 px-6 bg-slate-50">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection>
             <div className="flex items-center gap-4 mb-4">
@@ -386,7 +395,7 @@ function AppContent() {
       </section>
 
       {/* Keynotes Section */}
-      <section id="keynotes" className="relative py-24 px-6 bg-white">
+      <section id="keynotes" className="scroll-mt-24 relative py-24 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection>
             <div className="flex items-center gap-4 mb-4">
@@ -441,7 +450,7 @@ function AppContent() {
       </section>
 
       {/* Important Dates */}
-      <section id="dates" className="relative py-24 px-6 bg-slate-50">
+      <section id="dates" className="scroll-mt-24 relative py-24 px-6 bg-slate-50">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection>
             <div className="flex items-center gap-4 mb-16">
@@ -483,7 +492,7 @@ function AppContent() {
       </section>
 
       {/* Submission Guidelines */}
-      <section id="submission" className="relative py-24 px-6 bg-white">
+      <section id="submission" className="scroll-mt-24 relative py-24 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection>
             <div className="flex items-center gap-4 mb-16">
@@ -621,7 +630,7 @@ function AppContent() {
       </section>
 
       {/* Committee Section */}
-      <section id="committee" className="relative py-24 px-6 bg-slate-50">
+      <section id="committee" className="scroll-mt-24 relative py-24 px-6 bg-slate-50">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection>
             <div className="flex items-center gap-4 mb-16">
