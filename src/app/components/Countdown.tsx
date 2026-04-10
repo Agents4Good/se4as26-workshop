@@ -51,7 +51,7 @@ export function Countdown() {
     <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
       <h3 className="text-white text-xl font-semibold mb-6 text-center">Countdown to SE4AS 2026</h3>
       
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
         {[
           { value: timeLeft.days, label: 'Days' },
           { value: timeLeft.hours, label: 'Hours' },
@@ -60,15 +60,15 @@ export function Countdown() {
         ].map((item, index) => (
           <motion.div
             key={item.label}
-            className="bg-slate-900/50 rounded-lg p-4 text-center"
+            className="bg-slate-900/50 rounded-lg p-3 sm:p-4 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
-            <div className="text-3xl font-bold text-white mb-1">
+            <div className="text-2xl sm:text-3xl font-bold text-white mb-1 tabular-nums">
               {String(item.value).padStart(2, '0')}
             </div>
-            <div className="text-slate-400 text-xs uppercase tracking-wider">
+            <div className="text-slate-400 text-[10px] sm:text-xs uppercase tracking-wider">
               {item.label}
             </div>
           </motion.div>
