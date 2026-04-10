@@ -30,11 +30,31 @@ function AppContent() {
   const { scrollYProgress } = useScroll();
   const heroRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDoneTyping, setIsDoneTyping] = useState(false);
 
   useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
     document.documentElement.style.scrollBehavior = 'smooth';
+
+    window.scrollTo(0, 0);
+
+    if (window.location.hash) {
+      window.history.replaceState("", document.title, window.location.pathname);
+    }
+
+    const timer = setTimeout(() => {
+      setIsDoneTyping(true);
+    }, 5000);
+
     return () => {
+      clearTimeout(timer);
       document.documentElement.style.scrollBehavior = 'auto';
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'auto';
+      }
     };
   }, []);
 
@@ -216,12 +236,16 @@ function AppContent() {
               />
 
               <motion.div
-                className="text-lg md:text-2xl text-slate-300 mb-12 leading-relaxed min-h-[4rem]"
+                className={`text-lg md:text-2xl text-slate-300 mb-12 leading-relaxed min-h-[6rem] md:min-h-[4rem] ${!isDoneTyping ? 'notranslate' : ''}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <TypewriterText text="I Workshop on Software Engineering for Agentic Systems" delay={1000} speed={50} />
+                <TypewriterText 
+                  text="I Workshop on Software Engineering for Agentic Systems" 
+                  delay={1000} 
+                  speed={50} 
+                />
               </motion.div>
 
               <motion.div
