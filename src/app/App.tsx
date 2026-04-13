@@ -357,7 +357,8 @@ function AppContent() {
                 </h3>
                 <p className="text-slate-700 mb-8 leading-relaxed">
                   SE4AS aims to consolidate a scientific and technical agenda by bringing together 
-                  researchers and industry practitioners interested in Software Engineering for Agentic Systems.
+                  researchers and industry practitioners interested in Software Engineering for Agentic Systems. 
+                  The workshop seeks to promote a structured exchange of experiences, challenges, and solutions, contributing to:
                 </p>
                 <div className="space-y-4">
                   {[
@@ -395,8 +396,8 @@ function AppContent() {
               <h2 className="text-5xl font-bold text-slate-900">
                 Topics of Interest
               </h2>
-            </div>
-            <p className="text-slate-600 mb-12 text-lg ml-16">Topics include, but are not limited to:</p>
+            </div> 
+            <p className="text-slate-600 mb-12 text-lg ml-16">Topics of interest include, but are not limited to:</p>
           </AnimatedSection>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -744,19 +745,19 @@ function AppContent() {
       {/* Footer */}
       <footer className="relative py-16 px-6 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto">
-          {/* Sponsor Section 
+          {/* Sponsor Section */}
           <div className="mb-12 pb-12 border-b border-slate-800">
             <h3 className="font-semibold mb-6 text-xl text-center">Sponsored By</h3>
             <div className="flex justify-center">
               <div className="bg-white rounded-xl p-8 w-64 flex items-center justify-center">
                 <img
-                  src="#"
+                  src="agents4good.png"
                   alt="Sponsor"
                   className="max-h-full w-auto"
                 />
               </div>
             </div>
-          </div>*/}
+          </div>
 
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
