@@ -216,38 +216,39 @@ function AppContent() {
         <div className="max-w-7xl mx-auto relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
-                <Badge className="mb-6 bg-slate-800 text-slate-200 border-slate-700">
-                  Co-located with CBSoft 2026
-                </Badge>
-              </motion.div>
+            <div className="flex flex-col items-center lg:items-start gap-7">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                  <Badge className="mb-6 bg-slate-800 text-slate-200 border-slate-700">
+                    Co-located with CBSoft 2026
+                  </Badge>
+                </motion.div>
 
-              <motion.img
-                src="logo-branca.png"
-                alt="SE4AS 2026 Logo"
-                className="h-20 md:h-32 w-auto mb-6 object-contain mx-auto lg:mx-0"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-              />
-
-              <motion.div
-                className={`text-lg md:text-2xl text-slate-300 mb-12 leading-relaxed min-h-[6rem] md:min-h-[4rem] ${!isDoneTyping ? 'notranslate' : ''}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.8 }}
-              >
-                <TypewriterText 
-                  text="I Workshop on Software Engineering for Agentic Systems" 
-                  delay={1000} 
-                  speed={50} 
+                <motion.img
+                  src="logo-branca.svg"
+                  alt="SE4AS 2026 Logo"
+                  className="h-10 md:h-18 w-auto mb-6 object-contain mx-auto lg:mx-0"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
                 />
-              </motion.div>
 
+                <motion.div
+                  className={`text-lg md:text-2xl text-slate-300 mb-12 leading-relaxed min-h-[6rem] md:min-h-[4rem] ${!isDoneTyping ? 'notranslate' : ''}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                >
+                  <TypewriterText 
+                    text="I Workshop on Software Engineering for Agentic Systems" 
+                    delay={1000} 
+                    speed={50} 
+                  />
+                </motion.div>
+              </div>
               <motion.div
                 className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 text-slate-300 mb-12"
                 initial={{ opacity: 0, y: 20 }}
