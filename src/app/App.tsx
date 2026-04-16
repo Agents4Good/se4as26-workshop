@@ -106,8 +106,10 @@ function AppContent() {
     { name: "João Eduardo Montandon", institution: "UFMG" },
     { name: "Leandro Marinho", institution: "UFCG" },
     { name: "Marcelo D'Amorim", institution: "UFPE" },
+    { name: "Marcelo Maia", institution: "UFU" },
     { name: "Mário Ribeiro", institution: "UFAL" },
     { name: "Patrícia Machado", institution: "UFCG" },
+    { name: "Paulo Maia", institution: "UECE" },
     { name: "Vânia Neves", institution: "UFF" }
   ];
 
