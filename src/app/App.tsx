@@ -854,7 +854,7 @@ function AppContent() {
 
               {/* Linkedin */}
               <motion.a
-                href="#"
+                href="https://www.linkedin.com/in/se4as26-workshop/"
                 target="_blank"
                 rel="noreferrer"
                 className="text-slate-400 hover:text-white transition-colors"
