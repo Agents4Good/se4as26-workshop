@@ -31,6 +31,7 @@ function AppContent() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDoneTyping, setIsDoneTyping] = useState(false);
+  const [selectedSpeaker, setSelectedSpeaker] = useState<typeof keynotesData[0] | null>(null);
 
   useEffect(() => {
     if ('scrollRestoration' in history) {
@@ -74,6 +75,44 @@ function AppContent() {
     "Safety, ethics, and governance of agentic systems",
     "Empirical studies and industrial experiences with agentic systems",
     "Applications of agentic systems in a range of areas, including data science, education, healthcare, and defense"
+  ];
+
+  type KeynoteSpeaker = {
+  id: number;
+  isPlaceholder?: boolean;
+  name?: string;
+  institution?: string;
+  image?: string;
+  topic?: string;
+  abstract?: string;
+  bio?: string;
+  };
+
+  const keynotesData: KeynoteSpeaker[] = [
+  {
+    id: 1,
+    name: "Marcos Kalinowski",
+    institution: "PUC-Rio, Brazil",
+    image: "marcos-kalinowski.jpg",
+    bio: `Marcos Kalinowski is a Professor of Software Engineering at PUC-Rio, Brazil, where he leads the Software & AI Engineering Lab (SAIL), \
+    supervises doctoral research, and conducts R&D projects in collaboration with industry partners. His research focuses on AI Engineering, \
+    AI-Augmented Software Engineering, Empirical Software Engineering, and Human Aspects of Software Engineering, resulting in industry-adopted solutions, \
+    patents, and more than 200 scientific articles, mostly published in top-tier venues. 
+
+    This body of work has achieved significant international visibility, positioning him as the most cited software engineering scientist in Latin America in 2024, \
+    2025, and 2026. Throughout his career he received over 20 distinguished paper awards, including ACM Distinguished Paper Awards at ICSE, CAIN, and CHASE. \
+    He holds a research productivity fellowship from the Brazilian Research Council (CNPq), a "Scientist of the State" distinction from the Rio de Janeiro state (FAPERJ), \
+    and is a fellow of the Kunumi Institute. 
+
+    Marcos has held several prominent leadership roles in the international software engineering research community, including the roles of PC chair of ESEM, \
+    Chair of the ISERN, and General Chair of ICSE. He serves the research community as an Associate Editor of IEEE Software, IEEE Transactions on Software Engineering, \
+    Empirical Software Engineering, and the Journal of Systems and Software. He is an active member of ACM, IEEE, ISERN, and the Brazilian Computer Society.
+    `
+  },
+  {
+    id: 2,
+    isPlaceholder: true
+  }
   ];
 
   const importantDates = [
@@ -436,46 +475,177 @@ function AppContent() {
             <p className="text-slate-600 mb-16 text-lg ml-16">Leading experts in agentic systems and software engineering</p>
           </AnimatedSection>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Single Keynote Placeholder */}
-            <AnimatedSection delay={0.1}>
-              <motion.div
-                className="group bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-500 relative"
-                whileHover={{ y: -8 }}
-              >
-                {/* Blurred Placeholder Image */}
-                <div className="relative aspect-[3/4] overflow-hidden bg-slate-200">
-                  <div className="absolute inset-0 bg-gradient-to-br from-slate-300 to-slate-400 blur-xl" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-slate-500 text-center p-6">
-                      <div className="w-20 h-20 rounded-full bg-slate-300 mx-auto mb-4" />
-                      <div className="h-4 bg-slate-300 rounded mb-2 w-3/4 mx-auto" />
-                      <div className="h-3 bg-slate-300 rounded w-1/2 mx-auto" />
-                    </div>
-                  </div>
-                </div>
+          {/* Grid de Cards Dinâmicos */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            {keynotesData.map((speaker) => {
+              if (speaker.isPlaceholder) {
+                return (
+                  <AnimatedSection key={speaker.id} delay={0.2}>
+                    <motion.div
+                    className="group bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-500 relative flex flex-col h-full cursor-pointer"
+                    whileHover={{ y: -8 }}
+                    >
+                      <div className="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden relative flex flex-col h-full opacity-75 select-none pointer-events-none">
+                        {/* To be announced */}
+                        <div className="relative aspect-[4/3] overflow-hidden bg-slate-200 flex items-center justify-center">
+                          <div className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300 blur-xl" />
+                          <div className="relative w-20 h-20 rounded-full bg-slate-300/80 animate-pulse border-2 border-white/40" />
+                        </div>
 
-                {/* Info */}
-                <div className="p-6 bg-slate-50">
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-xs uppercase tracking-wider text-slate-500 mb-1">Topic</p>
-                      <div className="h-3 bg-slate-200 rounded w-full mb-2" />
-                      <div className="h-3 bg-slate-200 rounded w-3/4" />
+                        <div className="p-6 flex flex-col flex-1 justify-between bg-white border-t border-slate-100">
+                          <div className="space-y-4">
+                            <div>
+                              <div className="h-5 bg-slate-200 rounded w-2/3 mb-2 animate-pulse" />
+                              <div className="h-4 bg-slate-200 rounded w-1/2 animate-pulse" />
+                            </div>
+                            
+                            <div className="pt-2">
+                              <p className="text-xs uppercase tracking-wider font-bold text-slate-300 mb-2">Topic</p>
+                              <div className="space-y-2">
+                                <div className="h-3.5 bg-slate-100 rounded w-full animate-pulse" />
+                                <div className="h-3.5 bg-slate-100 rounded w-4/5 animate-pulse" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="mt-8 pt-4 border-t border-slate-100 flex items-center justify-center text-sm text-slate-400 font-medium italic">
+                            <span>To be announced</span>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </AnimatedSection>
+                );
+              }
+
+              const isAnnounced = speaker.topic && speaker.topic.trim() !== "";
+
+              return (
+                <AnimatedSection key={speaker.id} delay={0.1}>
+                  <motion.div
+                    className="group bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-500 relative flex flex-col h-full cursor-pointer"
+                    whileHover={{ y: -8 }}
+                    onClick={() => setSelectedSpeaker(speaker)}
+                  >
+                    {/* Imagem do Palestrante */}
+                    <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                      <img 
+                        src={speaker.image} 
+                        alt={speaker.name} 
+                        className="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-500" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                        <span className="text-white text-sm font-medium flex items-center gap-2">
+                          View profile & details <ArrowRight size={16} />
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-wider text-slate-500 mb-1">Abstract</p>
-                      <div className="h-2 bg-slate-200 rounded w-full mb-1" />
-                      <div className="h-2 bg-slate-200 rounded w-full mb-1" />
-                      <div className="h-2 bg-slate-200 rounded w-2/3" />
+
+                    {/* Informações Básicas do Card */}
+                    <div className="p-6 flex flex-col flex-1 justify-between bg-white border-t border-slate-100">
+                      <div>
+                        <h3 className="text-xl font-bold text-slate-900 mb-0.5">{speaker.name}</h3>
+                        <p className="text-sm text-slate-500 mb-4">{speaker.institution}</p>
+                        
+                        <p className="text-xs uppercase tracking-wider font-bold text-slate-400 mb-1">Topic</p>
+                        {isAnnounced ? (
+                          <p className="text-slate-700 font-medium text-sm line-clamp-2 leading-snug">
+                            {speaker.topic}
+                          </p>
+                        ) : (
+                          <p className="text-slate-400 italic text-sm">To be announced</p>
+                        )}
+                      </div>
+
+                      <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-sm text-slate-600 font-medium group-hover:text-slate-900 transition-colors">
+                        <span>Read Full Details</span>
+                        <ChevronDown size={18} className="rotate-270 group-hover:translate-x-1 transition-transform" />
+                      </div>
                     </div>
-                  </div>
-                  <p className="text-xs text-slate-500 italic mt-4 text-center">To be announced</p>
-                </div>
-              </motion.div>
-            </AnimatedSection>
+                  </motion.div>
+                </AnimatedSection>
+              );
+            })}
           </div>
         </div>
+
+        {/* Painel do Drawer Lateral */}
+        <AnimatePresence>
+          {selectedSpeaker && (
+            <>
+              {/* Fundo Escurecido (Backdrop) */}
+              <motion.div 
+                className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedSpeaker(null)}
+              />
+
+              {/* Corpo Lateral */}
+              <motion.div 
+                className="fixed right-0 top-0 bottom-0 w-full md:max-w-xl lg:max-w-2xl xl:max-w-3xl bg-white shadow-2xl z-50 p-8 md:p-10 overflow-y-auto flex flex-col"
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'spring', damping: 32, stiffness: 260 }}
+              >
+                <button 
+                  onClick={() => setSelectedSpeaker(null)}
+                  className="absolute top-6 right-6 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  <X size={20} />
+                </button>
+
+                <div className="space-y-6 mt-6">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+                    <img 
+                      src={selectedSpeaker.image} 
+                      alt={selectedSpeaker.name} 
+                      className="w-24 h-24 rounded-2xl object-cover object-top border border-slate-200 shadow-sm" 
+                    />
+                    <div>
+                      <h3 className="text-2xl font-bold text-slate-900">{selectedSpeaker.name}</h3>
+                      <p className="text-base text-slate-500 font-medium">{selectedSpeaker.institution}</p>
+                    </div>
+                  </div>
+
+                  <hr className="border-slate-100" />
+
+                  {selectedSpeaker.topic ? (
+                    <>
+                      <div className="space-y-1">
+                        <h4 className="text-xs uppercase tracking-wider font-bold text-slate-400">Topic</h4>
+                        <p className="text-lg font-bold text-slate-900 leading-snug">{selectedSpeaker.topic}</p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <h4 className="text-xs uppercase tracking-wider font-bold text-slate-400">Abstract</h4>
+                        <p className="text-slate-600 text-sm leading-relaxed whitespace-pre-line bg-slate-50 p-4 rounded-xl border border-slate-100">
+                          {selectedSpeaker.abstract}
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="space-y-1 bg-slate-50 p-4 rounded-xl border border-slate-100 border-dashed">
+                      <h4 className="text-xs uppercase tracking-wider font-bold text-slate-400">Talk Information</h4>
+                      <p className="text-slate-500 italic text-sm">Topic and abstract will be announced soon.</p>
+                    </div>
+                  )}
+
+                  {selectedSpeaker.bio && (
+                    <div className="space-y-2">
+                      <h4 className="text-xs uppercase tracking-wider font-bold text-slate-400">Biography</h4>
+                      <p className="text-slate-600 text-sm leading-relaxed whitespace-pre-line">
+                        {selectedSpeaker.bio}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* Important Dates */}
