@@ -116,7 +116,7 @@ function AppContent() {
   ];
 
   const importantDates = [
-    { label: "Paper registration", date: "July 3, 2026" },
+    { label: "Paper registration", date: "July 10, 2026" },
     { label: "Paper submission", date: "July 10, 2026" },
     { label: "Author notification", date: "August 3, 2026" },
     { label: "Camera-ready", date: "August 10, 2026" },
@@ -662,23 +662,39 @@ function AppContent() {
 
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-              {importantDates.map((item, index) => (
-                <AnimatedSection key={index} delay={index * 0.08}>
-                  <motion.div
-                    className="group py-6 px-8 border-b border-slate-200 last:border-b-0 hover:bg-slate-50 transition-all duration-300"
-                    whileHover={{ x: 4 }}
-                  >
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-700 group-hover:text-slate-900 transition-colors duration-300">
-                        {item.label}
-                      </span>
-                      <span className="font-semibold text-slate-900 text-lg">
-                        {item.date}
-                      </span>
-                    </div>
-                  </motion.div>
-                </AnimatedSection>
-              ))}
+              {importantDates.map((item, index) => {
+                const isPaperRegistration = item.label.toLowerCase().includes("paper registration");
+
+                return (
+                  <AnimatedSection key={index} delay={index * 0.08}>
+                    <motion.div
+                      className={`group py-6 px-8 border-b border-slate-200 last:border-b-0 transition-all duration-300
+                        ${isPaperRegistration ? 'bg-amber-50/50 hover:bg-amber-50' : 'hover:bg-slate-50'}`}
+                      whileHover={{ x: 4 }}
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div className="flex items-center gap-3">
+                          <span className={`text-slate-700 group-hover:text-slate-900 transition-colors duration-300
+                            ${isPaperRegistration ? 'font-medium text-slate-900' : ''}`}>
+                            {item.label}
+                          </span>
+                          
+                          {isPaperRegistration && (
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
+                              Nova Data
+                            </span>
+                          )}
+                        </div>
+
+                        <span className={`font-semibold text-lg transition-colors duration-300
+                          ${isPaperRegistration ? 'text-amber-700' : 'text-slate-900'}`}>
+                          {item.date}
+                        </span>
+                      </div>
+                    </motion.div>
+                  </AnimatedSection>
+                );
+              })}
             </div>
             
             <AnimatedSection delay={0.5}>
