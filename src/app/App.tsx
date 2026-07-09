@@ -748,10 +748,10 @@ function AppContent() {
 
                 <h3 className="text-xl font-semibold text-slate-900 mb-4">We invite the following types of submissions:</h3>
                 <ul className="list-disc list-inside space-y-2 text-slate-700 mb-6">
-                  <li>Short papers (6 pages, including all figures, tables, and acknowledgments)</li>
-                  <li>Position and vision papers (4 pages, including all figures, tables, and acknowledgments)</li>
-                  <li>Industrial experience reports (4 pages, including all figures, tables, and acknowledgments)</li>
-                  <li>Tool, framework, or benchmark proposals (2 pages, including all figures, tables, and acknowledgments)</li>
+                  <li>Short papers (6 pages, including all figures, tables, acknowledgments, and references)</li>
+                  <li>Position and vision papers (4 pages, including all figures, tables, acknowledgments, and references)</li>
+                  <li>Industrial experience reports (4 pages, including all figures, tables, acknowledgments, and references)</li>
+                  <li>Tool, framework, or benchmark proposals (2 pages, including all figures, tables, acknowledgments, and references)</li>
                 </ul>
 
                 <p className="text-slate-700 leading-relaxed mb-6">
