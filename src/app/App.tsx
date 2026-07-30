@@ -85,14 +85,14 @@ function AppContent() {
   image?: string;
   topic?: string;
   abstract?: string;
-  bio?: string;
+  bio?: React.ReactNode;
   };
 
   const keynotesData: KeynoteSpeaker[] = [
   {
     id: 1,
     name: "Marcos Kalinowski",
-    institution: "PUC-Rio, Brazil",
+    //institution: "PUC-Rio, Brazil",
     image: "marcos-kalinowski.jpg",
     bio: `Marcos Kalinowski is a Professor of Software Engineering at PUC-Rio, Brazil, where he leads the Software & AI Engineering Lab (SAIL), \
     supervises doctoral research, and conducts R&D projects in collaboration with industry partners. His research focuses on AI Engineering, \
@@ -111,7 +111,27 @@ function AppContent() {
   },
   {
     id: 2,
-    isPlaceholder: true
+    name: "Andrews Medina",
+    //institution: "AI Researcher",
+    image: "andrews-medina.jpeg",
+    bio: (
+      <>
+        Andrews Medina has spent his career building and leading engineering teams behind large-scale systems. 
+        His work combines leadership and hands-on experience—from writing code to deploying systems that serve millions of users. 
+        He held leadership engineering positions at Globo.com, Jusbrasil, and Indaband, where he built and scaled teams and infrastructure to operate at high volume. 
+        He is the co-creator of the open-source projects{' '}
+        <a 
+          href="https://tsuru.io/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="font-semibold text-slate-900 underline hover:text-slate-700 transition-colors"
+        >
+          tsuru.io
+        </a>{' '}
+        and Splinter. More recently, his focus has shifted to researching sustainable and scalable ways to build AI agents. 
+        When he's not architecting distributed systems, he can be found reading or playing guitar.
+      </>
+    )
   }
   ];
 
