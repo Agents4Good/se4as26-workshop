@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'motion/react';
-import { Calendar, MapPin, ChevronDown, ArrowRight, Mail, ExternalLink, Menu, X } from 'lucide-react';
+import { Calendar, MapPin, ChevronDown, ArrowRight, Mail, ExternalLink, Menu, X, Clock, Users, FileText, Building2, Globe2 } from 'lucide-react';
 import { Badge } from './components/ui/badge';
 import { Button } from './components/ui/button';
 import { GeometricBackground } from './components/GeometricBackground';
 import { SectionConnector } from './components/SectionConnector';
 import { TypewriterText } from './components/TypewriterText';
 import { Countdown } from './components/Countdown';
+import { AuthorsMap, type StateAuthorData, type InternationalAuthor } from './components/Authorsmap';
 
 // Componente de Seção Animada
 function AnimatedSection({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -32,6 +33,7 @@ function AppContent() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDoneTyping, setIsDoneTyping] = useState(false);
   const [selectedSpeaker, setSelectedSpeaker] = useState<typeof keynotesData[0] | null>(null);
+  const [selectedPaper, setSelectedPaper] = useState<typeof papersData[0] | null>(null);
 
   useEffect(() => {
     if ('scrollRestoration' in history) {
@@ -59,7 +61,7 @@ function AppContent() {
     };
   }, []);
 
-  const navItems = ['overview', 'topics', 'keynotes', 'dates', 'submission', 'committee'];
+  const navItems = ['overview', 'topics', 'keynotes', 'dates', 'submission', 'papers', 'committee'];
 
   const topics = [
     "Software engineering techniques and methodologies for agentic systems",
@@ -142,6 +144,209 @@ function AppContent() {
     { label: "Camera-ready", date: "August 10, 2026" },
     { label: "Workshop date", date: "September 8, 2026" }
   ];
+
+  type Author = { name: string; affiliation: string };
+  type Paper = {
+    id: string;
+    title: string;
+    track: string;
+    session: string;
+    time: string;
+    authors: Author[];
+  };
+
+  function parseAuthors(raw: string): Author[] {
+    return raw.split(';').map((chunk) => {
+      const entry = chunk.trim();
+      const match = entry.match(/^(.*)\s\(([^)]+)\)$/);
+      return match
+        ? { name: match[1].trim(), affiliation: match[2].trim() }
+        : { name: entry, affiliation: '' };
+    });
+  }
+
+  const rawPapers: { id: string; time: string; session: string; track: string; title: string; authors: string }[] = [
+    {
+      id: 'paper-1', time: '12:10–12:18', session: 'Technical Session 1', track: 'Position and Vision Papers',
+      title: 'Humans in Control: A Methodological Framework for Quality Assurance in Agentic Software Engineering (Vision Paper)',
+      authors: 'Matheus Silveira (USP, Brazil); Paulo Meirelles (USP, Brazil); Igor Steinmacher (NAU, United States of America); Fabio Kon (USP, Brazil)'
+    },
+    {
+      id: 'paper-2', time: '12:18–12:26', session: 'Technical Session 1', track: 'Position and Vision Papers',
+      title: 'Accountability in Agentic Secure Software Development Life Cycles: Challenges, Degradation Scenarios, and Governance Principles',
+      authors: 'Rubens Abraão da Silva Sousa (UECE, Brazil); Gabriel Pinheiro (UECE, Brazil); Igor Ramsés Temóteo dos Santos (UECE, Brazil); Sávio Freire (Federal Institute of Ceará, Brazil); Ismayle Santos (UECE, Brazil); Paulo Maia (UECE, Brazil)'
+    },
+    {
+      id: 'paper-3', time: '14:00–14:08', session: 'Technical Session 2', track: 'Position and Vision Papers',
+      title: 'Beyond Task Completion: Product and Human-Agent Process Quality in Agentic Software Engineering',
+      authors: 'Rubens Abraão da Silva Sousa (UECE, Brazil); Gabriel Pinheiro (UECE, Brazil); Evellin Moura (UECE, Brazil); Ismayle Santos (UECE, Brazil); Sávio Freire (Federal Institute of Ceará, Brazil); Paulo Maia (UECE, Brazil)'
+    },
+    {
+      id: 'paper-4', time: '14:08–14:18', session: 'Technical Session 2', track: 'Short Papers',
+      title: 'System Prompts as Specifications: Assessing the Verifiability of Claude Code Sub-Agent Behavioral Claims',
+      authors: 'Débora Souza (Federal University of Campina Grande, Brazil); Pedro Lima (UFCG, Brazil)'
+    },
+    {
+      id: 'paper-5', time: '14:18–14:26', session: 'Technical Session 2', track: 'Position and Vision Papers',
+      title: 'Measure the Right Thing, at the Right Grain: Three Measurement Traps in Evaluating Code-Repair Agents',
+      authors: 'João Wieland (COPPE/UFRJ, Brazil); Diego Castro (CEFET/RJ, Brazil); Claudia Werner (COPPE/UFRJ, Brazil)'
+    },
+    {
+      id: 'paper-6', time: '14:26–14:36', session: 'Technical Session 2', track: 'Short Papers',
+      title: 'Benchmarking Agentic Frameworks for Incremental Software Evolution',
+      authors: 'Vitor Linhares (UECE, Brazil); Anderson Gomes (UECE, Brazil); Ingrid Vieira (UECE, Brazil); Paulo Maia (UECE, Brazil)'
+    },
+    {
+      id: 'paper-7', time: '14:36–14:44', session: 'Technical Session 2', track: 'Short Papers',
+      title: 'Fairness Risk Triage in Pull Requests Using an LLM-Based Reviewer: An Experiment on Prompting Strategies',
+      authors: 'Gabriel Fernandes de Oliveira Caitano (UFMS, Brazil); Arthur Cacciatore (UFMS, Brazil); Awdren de Lima Fontão (Federal University of Mato Grosso do Sul, Brazil)'
+    },
+    {
+      id: 'paper-8', time: '15:10–15:20', session: 'Technical Session 3', track: 'Short Papers',
+      title: 'Agentes de Codificação de IA como Prática Colaborativa: Implicações para Equipes de Desenvolvimento de Software',
+      authors: 'Lucas Feksa Hickmann (UFRGS, Brazil); Barbara de Jesus Hoch (UFRGS, Brazil); Rafael Parizi (IFFar, Brazil); Leticia Machado (UFRGS, Brazil)'
+    },
+    {
+      id: 'paper-9', time: '15:20–15:28', session: 'Technical Session 3', track: 'Position and Vision Papers',
+      title: 'Agile Management for Foundation Model Based Agentic Systems: A Vision',
+      authors: 'Lucas Romão (PUC-Rio, Brazil); Yasmin Sandes (PUC-Rio, Brazil); Gabriel Mariquito (PUC-Rio, Brazil); José Matheus Boaro (PUC-Rio, Brazil); Marcos Antonio Alves (UFMG, Brazil); Marcos Kalinowski (PUC-Rio, Brazil)'
+    },
+    {
+      id: 'paper-10', time: '15:28–15:38', session: 'Technical Session 3', track: 'Short Papers',
+      title: 'From Meeting Audio to Requirements: A Generative-AI Multi-Agent Pipeline',
+      authors: 'Gabriel Silva (INF/UFG, Brazil); Jacson Rodrigues Barbosa (UFG, Brazil); Paulo Marcos Soares Rodrigues (Goiás State Government); Heitor Rodrigues (UFG, Brazil)'
+    },
+    {
+      id: 'paper-11', time: '15:38–15:46', session: 'Technical Session 3', track: 'Position and Vision Papers',
+      title: 'Towards a Perspective-Based Multi-Agent Architecture for Requirements Engineering of ML-Enabled Systems',
+      authors: 'José Matheus Boaro (PUC-Rio, Brazil); Matheus Soranço (PUC-Rio, Brazil); Marcos Kalinowski (PUC-Rio, Brazil)'
+    },
+    {
+      id: 'paper-12', time: '17:30–17:40', session: 'Technical Session 4', track: 'Short Papers',
+      title: 'Towards an Agentic MAPE-K Architecture for Self-Adaptive Robotic Arm Systems',
+      authors: 'Joaquim Ribeiro (State University of Ceara, Brazil); Beatriz Andrade (UECE, Brazil); Suyane Freitas (UECE, Brazil); Lucas Vieira Alves (State University of Ceara, Brazil); Paulo Maia (UECE, Brazil)'
+    },
+    {
+      id: 'paper-13', time: '17:40–17:48', session: 'Technical Session 4', track: 'Position and Vision Papers',
+      title: 'Towards Agentic Research Problem Engineering: A Vision for Human-AI Collaboration in Software Engineering Research',
+      authors: 'Anrafel Fernandes Pereira (PUC-Rio, Brazil); Rafael Tomaz (PUC-Rio, Brazil); Paloma Guenes Costa (PUC-Rio, Brazil); Eduardo Almentero (UFRRJ, Brazil); Allysson Allex Araújo (Universidade Federal do Cariri, Brazil); Marcos Kalinowski (PUC-Rio, Brazil)'
+    },
+    {
+      id: 'paper-14', time: '17:48–17:58', session: 'Technical Session 4', track: 'Industrial Experience Reports',
+      title: 'Lessons Learned from Developing a Multi-Agent Healthcare Chatbot for Sickle Cell Disease Care',
+      authors: 'David Pereira (UFCG, Brazil); Herman Martins Gomes (UFCG, Brazil); Cláudio Elízio Calazans Campelo (UFCG, Brazil)'
+    },
+    {
+      id: 'paper-15', time: '17:58–18:08', session: 'Technical Session 4', track: 'Short Papers',
+      title: 'Improving Agentic AI Opportunity Identification Through GORE Driven Prompt Engineering',
+      authors: 'Edson Andrade de Moraes (PUC-Rio, Brazil); Marcos Kalinowski (PUC-Rio, Brazil)'
+    }
+  ];
+
+  const papersData: Paper[] = rawPapers.map((p) => ({
+    id: p.id,
+    title: p.title,
+    track: p.track,
+    session: p.session,
+    time: p.time,
+    authors: parseAuthors(p.authors)
+  }));
+
+  const trackStyles: Record<string, string> = {
+    'Position and Vision Papers': 'bg-violet-50 text-violet-700 border-violet-200',
+    'Short Papers': 'bg-sky-50 text-sky-700 border-sky-200',
+    'Industrial Experience Reports': 'bg-emerald-50 text-emerald-700 border-emerald-200'
+  };
+
+  const trackCounts = papersData.reduce((acc, paper) => {
+    acc[paper.track] = (acc[paper.track] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const trackOrder = ['Position and Vision Papers', 'Short Papers', 'Industrial Experience Reports'];
+
+  // Some institutions appear under more than one name in the raw affiliations
+  // (acronym vs. full name), so they're normalized here to avoid double counting.
+  const institutionAliases: Record<string, string> = {
+    'Federal University of Campina Grande': 'UFCG',
+    'State University of Ceara': 'UECE',
+    'INF/UFG': 'UFG',
+    'Federal University of Mato Grosso do Sul': 'UFMS'
+  };
+
+  const institutionMap = new Map<string, Set<string>>();
+  papersData.forEach((paper) => {
+    const uniqueInstitutions = new Set(
+      paper.authors
+        .map((a) => a.affiliation.split(',')[0].trim())
+        .filter(Boolean)
+        .map((inst) => institutionAliases[inst] ?? inst)
+    );
+    uniqueInstitutions.forEach((inst) => {
+      if (!institutionMap.has(inst)) institutionMap.set(inst, new Set());
+      institutionMap.get(inst)!.add(paper.id);
+    });
+  });
+  const institutionStats = Array.from(institutionMap.entries())
+    .map(([name, ids]) => ({ name, count: ids.size }))
+    .sort((a, b) => b.count - a.count);
+
+  const totalInstitutions = institutionMap.size;
+  const totalAuthors = new Set(papersData.flatMap((p) => p.authors.map((a) => a.name))).size;
+  const isInternational = (affiliation: string) => affiliation.includes('United States');
+  const internationalPapers = papersData.filter((p) => p.authors.some((a) => isInternational(a.affiliation))).length;
+
+  const institutionLocations: Record<string, { state: string | null; country: string }> = {
+    'UFCG': { state: 'pb', country: 'Brazil' },
+    'UECE': { state: 'ce', country: 'Brazil' },
+    'Federal Institute of Ceará': { state: 'ce', country: 'Brazil' },
+    'Universidade Federal do Cariri': { state: 'ce', country: 'Brazil' },
+    'USP': { state: 'sp', country: 'Brazil' },
+    'PUC-Rio': { state: 'rj', country: 'Brazil' },
+    'COPPE/UFRJ': { state: 'rj', country: 'Brazil' },
+    'CEFET/RJ': { state: 'rj', country: 'Brazil' },
+    'UFRRJ': { state: 'rj', country: 'Brazil' },
+    'UFMG': { state: 'mg', country: 'Brazil' },
+    'UFRGS': { state: 'rs', country: 'Brazil' },
+    'IFFar': { state: 'rs', country: 'Brazil' },
+    'UFG': { state: 'go', country: 'Brazil' },
+    'Goiás State Government': { state: 'go', country: 'Brazil' },
+    'UFMS': { state: 'ms', country: 'Brazil' },
+    'NAU': { state: null, country: 'United States' }
+  };
+
+  const stateMap = new Map<string, { authors: Set<string>; institutions: Set<string> }>();
+  const internationalAuthorsMap = new Map<string, { institution: string; country: string }>();
+
+  papersData.forEach((paper) => {
+    paper.authors.forEach((author) => {
+      const rawInst = author.affiliation.split(',')[0].trim();
+      if (!rawInst) return;
+      const inst = institutionAliases[rawInst] ?? rawInst;
+      const location = institutionLocations[inst];
+      if (!location) return;
+
+      if (location.state) {
+        if (!stateMap.has(location.state)) {
+          stateMap.set(location.state, { authors: new Set(), institutions: new Set() });
+        }
+        const entry = stateMap.get(location.state)!;
+        entry.authors.add(author.name);
+        entry.institutions.add(inst);
+      } else {
+        internationalAuthorsMap.set(author.name, { institution: inst, country: location.country });
+      }
+    });
+  });
+
+  const authorsMapData: StateAuthorData[] = Array.from(stateMap.entries()).map(([stateId, entry]) => ({
+    stateId,
+    count: entry.authors.size,
+    institutions: Array.from(entry.institutions)
+  }));
+
+  const internationalAuthorsList: InternationalAuthor[] = Array.from(internationalAuthorsMap.entries())
+    .map(([name, { institution, country }]) => ({ name, institution, country }));
 
   const committeeCoordination = [
     { name: "Patrícia D. L. Machado", institution: "UFCG" },
@@ -864,6 +1069,223 @@ function AppContent() {
         </div>
       </section>
 
+      {/* Accepted Papers Section */}
+      <section id="papers" className="scroll-mt-24 relative py-24 px-6 bg-slate-50">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection>
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-1 bg-slate-800" />
+              <h2 className="text-5xl font-bold text-slate-900">
+                Accepted Papers
+              </h2>
+            </div>
+            <p className="text-slate-600 mb-16 text-lg ml-16">
+              15 papers accepted, spanning position &amp; vision papers, short papers, and industrial experience reports
+            </p>
+          </AnimatedSection>
+
+          {/* Papers Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+            {papersData.map((paper, index) => (
+              <motion.div
+                key={paper.id}
+                className="group bg-white p-6 rounded-2xl border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 h-full flex flex-col cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: (index % 6) * 0.05 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -4 }}
+                onClick={() => setSelectedPaper(paper)}
+              >
+                <span className={`inline-flex self-start items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium border mb-4 ${trackStyles[paper.track] ?? 'bg-slate-100 text-slate-600 border-slate-200'}`}>
+                  {paper.track}
+                </span>
+                <p className="text-slate-900 font-semibold text-sm leading-snug mb-4 flex-1">
+                  {paper.title}
+                </p>
+                <div className="flex items-center justify-between pt-4 border-t border-slate-100 text-xs text-slate-500 font-medium group-hover:text-slate-900 transition-colors">
+                  <span className="flex items-center gap-1.5">
+                    <Users className="w-3.5 h-3.5" />
+                    {paper.authors.length} author{paper.authors.length > 1 ? 's' : ''}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    Details <ChevronDown size={14} className="rotate-270" />
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Infographics: By the Numbers */}
+          <AnimatedSection delay={0.1}>
+            <div className="flex items-center gap-4 mb-10">
+              <div className="w-12 h-1 bg-slate-800" />
+              <h3 className="text-3xl font-bold text-slate-900">By the Numbers</h3>
+            </div>
+          </AnimatedSection>
+
+          {/* Stat Cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+            {[
+              { label: 'Accepted Papers', value: papersData.length, icon: FileText },
+              { label: 'Contributing Institutions', value: totalInstitutions, icon: Building2 },
+              { label: 'Authors Involved', value: totalAuthors, icon: Users },
+              { label: 'International Collaborations', value: internationalPapers, icon: Globe2 }
+            ].map((stat, index) => (
+              <AnimatedSection key={stat.label} delay={0.1 + index * 0.05}>
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 h-full">
+                  <stat.icon className="w-5 h-5 text-slate-400 mb-3" />
+                  <p className="text-3xl font-bold text-slate-900">{stat.value}</p>
+                  <p className="text-slate-500 text-sm mt-1">{stat.label}</p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-stretch">
+            {/* Left column: Track distribution + Contributing Institutions, stacked */}
+            <div className="flex flex-col gap-8">
+              {/* Track Distribution */}
+              <AnimatedSection delay={0.2}>
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+                  <h4 className="text-lg font-semibold text-slate-900 mb-8">Papers by Track</h4>
+                  <div className="space-y-6">
+                    {trackOrder.map((track, index) => {
+                      const count = trackCounts[track] || 0;
+                      const percent = Math.round((count / papersData.length) * 100);
+                      const barColor =
+                        track === 'Position and Vision Papers' ? 'bg-violet-500' :
+                        track === 'Short Papers' ? 'bg-sky-500' : 'bg-emerald-500';
+                      return (
+                        <div key={track}>
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium text-slate-700">{track}</span>
+                            <span className="text-sm text-slate-500">{count} paper{count !== 1 ? 's' : ''}</span>
+                          </div>
+                          <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                            <motion.div
+                              className={`h-full ${barColor} rounded-full`}
+                              initial={{ width: 0 }}
+                              whileInView={{ width: `${percent}%` }}
+                              transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                              viewport={{ once: true }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </AnimatedSection>
+
+              {/* Institutions Cloud */}
+              <AnimatedSection delay={0.3}>
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+                  <h4 className="text-lg font-semibold text-slate-900 mb-1">Papers by Institution</h4>
+                  <p className="text-slate-500 text-sm mb-8">
+                  Number of accepted papers co-authored by each institution, with each paper counted for all participating institutions
+                  </p>
+                  <div className="flex flex-wrap items-center justify-center gap-3">
+                    {institutionStats.map((inst, index) => {
+                      const ratio = inst.count / institutionStats[0].count;
+                      const fontSize = 0.8 + ratio * 0.7;
+                      const tier =
+                        ratio > 0.75 ? 'bg-slate-900 text-white border-slate-900' :
+                        ratio > 0.5 ? 'bg-slate-700 text-white border-slate-700' :
+                        ratio > 0.25 ? 'bg-slate-200 text-slate-800 border-slate-300' :
+                        'bg-slate-50 text-slate-600 border-slate-200';
+                      return (
+                        <motion.div
+                          key={inst.name}
+                          className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 border font-medium leading-none ${tier}`}
+                          style={{ fontSize: `${fontSize}rem` }}
+                          initial={{ opacity: 0, scale: 0.85 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.4, delay: index * 0.03 }}
+                          viewport={{ once: true }}
+                          whileHover={{ scale: 1.06 }}
+                        >
+                          <span>{inst.name}</span>
+                          <span className="opacity-70 text-xs">{inst.count}</span>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </AnimatedSection>
+            </div>
+
+            {/* Right column: Authors Map, matching the stacked column's height */}
+            <AnimatedSection delay={0.35} className="lg:h-full">
+              <AuthorsMap
+                data={authorsMapData}
+                internationalAuthors={internationalAuthorsList}
+                title="Where Authors Are From"
+                subtitle="Hover a highlighted state to see its institutions"
+              />
+            </AnimatedSection>
+          </div>
+
+        </div>
+
+        {/* Paper Details Drawer */}
+        <AnimatePresence>
+          {selectedPaper && (
+            <>
+              <motion.div
+                className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedPaper(null)}
+              />
+
+              <motion.div
+                className="fixed right-0 top-0 bottom-0 w-full md:max-w-xl lg:max-w-2xl xl:max-w-3xl bg-white shadow-2xl z-50 p-8 md:p-10 overflow-y-auto flex flex-col"
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'spring', damping: 32, stiffness: 260 }}
+              >
+                <button
+                  onClick={() => setSelectedPaper(null)}
+                  className="absolute top-6 right-6 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  <X size={20} />
+                </button>
+
+                <div className="space-y-6 mt-6">
+                  <div className="space-y-3">
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${trackStyles[selectedPaper.track] ?? 'bg-slate-100 text-slate-600 border-slate-200'}`}>
+                      {selectedPaper.track}
+                    </span>
+                    <h3 className="text-2xl font-bold text-slate-900 leading-snug">{selectedPaper.title}</h3>
+                  </div>
+
+                  <hr className="border-slate-100" />
+
+                  <div className="space-y-3">
+                    <h4 className="text-xs uppercase tracking-wider font-bold text-slate-400">
+                      Authors & Affiliations
+                    </h4>
+                    <div className="space-y-2">
+                      {selectedPaper.authors.map((author, i) => (
+                        <div key={i} className="flex items-start justify-between gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                          <span className="font-medium text-slate-900 text-sm">{author.name}</span>
+                          {author.affiliation && (
+                            <span className="text-slate-500 text-sm text-right flex-shrink-0">{author.affiliation}</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      </section>
+
       {/* Committee Section */}
       <section id="committee" className="scroll-mt-24 relative py-24 px-6 bg-slate-50">
         <div className="max-w-7xl mx-auto">
@@ -984,7 +1406,7 @@ function AppContent() {
             <div>
               <h3 className="font-semibold mb-4 text-lg">Quick Links</h3>
               <div className="flex flex-col gap-2">
-                {(['overview', 'topics', 'keynotes', 'dates', 'submission', 'committee'] as const).map((link) => (
+                {(['overview', 'topics', 'keynotes', 'dates', 'submission', 'papers', 'committee'] as const).map((link) => (
                   <a
                     key={link}
                     href={`#${link}`}
