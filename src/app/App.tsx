@@ -96,6 +96,14 @@ function AppContent() {
     name: "Marcos Kalinowski",
     //institution: "PUC-Rio, Brazil",
     image: "marcos-kalinowski.jpg",
+    topic: "A Research Agenda on Agents and Software Engineering",
+    abstract: `Agentic systems are moving software engineering beyond applications that merely invoke LLMs toward systems that can act, coordinate,\
+     adapt, use tools, maintain state, and make decisions in dynamic environments. This shift creates major opportunities for automation, \
+     productivity, and new forms of human-AI collaboration, but also raises new challenges for requirements, architecture, orchestration, quality, \
+     governance, sustainability, and human oversight. This keynote discusses how software engineering must evolve to support the responsible development \
+     of agentic systems, while also exploring how agents can transform software engineering itself. The talk will delineate a research agenda on agents \
+     and software engineering, arguing that agentic systems should not be treated as isolated AI components or experimental prototypes, but as complex \
+     software-intensive systems that require robust engineering foundations, shared methods, reusable patterns, evaluation approaches, and trustworthy practices.`,
     bio: `Marcos Kalinowski is a Professor of Software Engineering at PUC-Rio, Brazil, where he leads the Software & AI Engineering Lab (SAIL), \
     supervises doctoral research, and conducts R&D projects in collaboration with industry partners. His research focuses on AI Engineering, \
     AI-Augmented Software Engineering, Empirical Software Engineering, and Human Aspects of Software Engineering, resulting in industry-adopted solutions, \
