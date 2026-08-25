@@ -1352,7 +1352,7 @@ function AppContent() {
               </h2>
             </div>
             <p className="text-slate-600 mb-12 text-lg ml-16">
-              Full schedule. All times are local (BRT).
+            Full schedule for September 8, 2026. All times are local (BRT).
             </p>
           </AnimatedSection>
 
