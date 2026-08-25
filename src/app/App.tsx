@@ -268,7 +268,7 @@ function AppContent() {
     { time: '12:18', type: 'paper', paperId: 'paper-2' },
     { time: '12:26', type: 'qa', title: 'Q&A Session (Technical Session 1)' },
     
-    { time: '12:30', type: 'break', title: 'Lunch Break' },
+    { time: '12:30', type: 'break', title: 'Lunch' },
     
     { time: '14:00', type: 'session', title: 'Technical Session 2' },
     { time: '14:00', type: 'paper', paperId: 'paper-3' },
