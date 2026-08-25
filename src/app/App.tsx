@@ -61,7 +61,7 @@ function AppContent() {
     };
   }, []);
 
-  const navItems = ['overview', 'topics', 'keynotes', 'dates', 'submission', 'papers', 'committee'];
+  const navItems = ['overview', 'topics', 'keynotes', 'dates', 'submission', 'papers', 'program', 'committee'];
 
   const topics = [
     "Software engineering techniques and methodologies for agentic systems",
@@ -175,80 +175,127 @@ function AppContent() {
 
   const rawPapers: { id: string; time: string; session: string; track: string; title: string; authors: string }[] = [
     {
-      id: 'paper-1', time: '12:10–12:18', session: 'Technical Session 1', track: 'Position and Vision Papers',
+      id: 'paper-1', time: '12:10-12:18', session: 'Technical Session 1', track: 'Position and Vision Papers',
       title: 'Humans in Control: A Methodological Framework for Quality Assurance in Agentic Software Engineering (Vision Paper)',
       authors: 'Matheus Silveira (USP, Brazil); Paulo Meirelles (USP, Brazil); Igor Steinmacher (NAU, United States of America); Fabio Kon (USP, Brazil)'
     },
     {
-      id: 'paper-2', time: '12:18–12:26', session: 'Technical Session 1', track: 'Position and Vision Papers',
+      id: 'paper-2', time: '12:18-12:26', session: 'Technical Session 1', track: 'Position and Vision Papers',
       title: 'Accountability in Agentic Secure Software Development Life Cycles: Challenges, Degradation Scenarios, and Governance Principles',
       authors: 'Rubens Abraão da Silva Sousa (UECE, Brazil); Gabriel Pinheiro (UECE, Brazil); Igor Ramsés Temóteo dos Santos (UECE, Brazil); Sávio Freire (Federal Institute of Ceará, Brazil); Ismayle Santos (UECE, Brazil); Paulo Maia (UECE, Brazil)'
     },
     {
-      id: 'paper-3', time: '14:00–14:08', session: 'Technical Session 2', track: 'Position and Vision Papers',
+      id: 'paper-3', time: '14:00-14:08', session: 'Technical Session 2', track: 'Position and Vision Papers',
       title: 'Beyond Task Completion: Product and Human-Agent Process Quality in Agentic Software Engineering',
       authors: 'Rubens Abraão da Silva Sousa (UECE, Brazil); Gabriel Pinheiro (UECE, Brazil); Evellin Moura (UECE, Brazil); Ismayle Santos (UECE, Brazil); Sávio Freire (Federal Institute of Ceará, Brazil); Paulo Maia (UECE, Brazil)'
     },
     {
-      id: 'paper-4', time: '14:08–14:18', session: 'Technical Session 2', track: 'Short Papers',
+      id: 'paper-4', time: '14:08-14:18', session: 'Technical Session 2', track: 'Short Papers',
       title: 'System Prompts as Specifications: Assessing the Verifiability of Claude Code Sub-Agent Behavioral Claims',
       authors: 'Débora Souza (Federal University of Campina Grande, Brazil); Pedro Lima (UFCG, Brazil)'
     },
     {
-      id: 'paper-5', time: '14:18–14:26', session: 'Technical Session 2', track: 'Position and Vision Papers',
+      id: 'paper-5', time: '14:18-14:26', session: 'Technical Session 2', track: 'Position and Vision Papers',
       title: 'Measure the Right Thing, at the Right Grain: Three Measurement Traps in Evaluating Code-Repair Agents',
       authors: 'João Wieland (COPPE/UFRJ, Brazil); Diego Castro (CEFET/RJ, Brazil); Claudia Werner (COPPE/UFRJ, Brazil)'
     },
     {
-      id: 'paper-6', time: '14:26–14:36', session: 'Technical Session 2', track: 'Short Papers',
+      id: 'paper-6', time: '14:26-14:36', session: 'Technical Session 2', track: 'Short Papers',
       title: 'Benchmarking Agentic Frameworks for Incremental Software Evolution',
       authors: 'Vitor Linhares (UECE, Brazil); Anderson Gomes (UECE, Brazil); Ingrid Vieira (UECE, Brazil); Paulo Maia (UECE, Brazil)'
     },
     {
-      id: 'paper-7', time: '14:36–14:44', session: 'Technical Session 2', track: 'Short Papers',
+      id: 'paper-7', time: '14:36-14:46', session: 'Technical Session 2', track: 'Short Papers',
       title: 'Fairness Risk Triage in Pull Requests Using an LLM-Based Reviewer: An Experiment on Prompting Strategies',
       authors: 'Gabriel Fernandes de Oliveira Caitano (UFMS, Brazil); Arthur Cacciatore (UFMS, Brazil); Awdren de Lima Fontão (Federal University of Mato Grosso do Sul, Brazil)'
     },
     {
-      id: 'paper-8', time: '15:10–15:20', session: 'Technical Session 3', track: 'Short Papers',
+      id: 'paper-8', time: '15:10-15:20', session: 'Technical Session 3', track: 'Short Papers',
       title: 'Agentes de Codificação de IA como Prática Colaborativa: Implicações para Equipes de Desenvolvimento de Software',
       authors: 'Lucas Feksa Hickmann (UFRGS, Brazil); Barbara de Jesus Hoch (UFRGS, Brazil); Rafael Parizi (IFFar, Brazil); Leticia Machado (UFRGS, Brazil)'
     },
     {
-      id: 'paper-9', time: '15:20–15:28', session: 'Technical Session 3', track: 'Position and Vision Papers',
+      id: 'paper-9', time: '15:20-15:28', session: 'Technical Session 3', track: 'Position and Vision Papers',
       title: 'Agile Management for Foundation Model Based Agentic Systems: A Vision',
       authors: 'Lucas Romão (PUC-Rio, Brazil); Yasmin Sandes (PUC-Rio, Brazil); Gabriel Mariquito (PUC-Rio, Brazil); José Matheus Boaro (PUC-Rio, Brazil); Marcos Antonio Alves (UFMG, Brazil); Marcos Kalinowski (PUC-Rio, Brazil)'
     },
     {
-      id: 'paper-10', time: '15:28–15:38', session: 'Technical Session 3', track: 'Short Papers',
+      id: 'paper-10', time: '15:28-15:38', session: 'Technical Session 3', track: 'Short Papers',
       title: 'From Meeting Audio to Requirements: A Generative-AI Multi-Agent Pipeline',
       authors: 'Gabriel Silva (INF/UFG, Brazil); Jacson Rodrigues Barbosa (UFG, Brazil); Paulo Marcos Soares Rodrigues (Goiás State Government); Heitor Rodrigues (UFG, Brazil)'
     },
     {
-      id: 'paper-11', time: '15:38–15:46', session: 'Technical Session 3', track: 'Position and Vision Papers',
+      id: 'paper-11', time: '15:38-15:46', session: 'Technical Session 3', track: 'Position and Vision Papers',
       title: 'Towards a Perspective-Based Multi-Agent Architecture for Requirements Engineering of ML-Enabled Systems',
       authors: 'José Matheus Boaro (PUC-Rio, Brazil); Matheus Soranço (PUC-Rio, Brazil); Marcos Kalinowski (PUC-Rio, Brazil)'
     },
     {
-      id: 'paper-12', time: '17:30–17:40', session: 'Technical Session 4', track: 'Short Papers',
+      id: 'paper-12', time: '17:30-17:40', session: 'Technical Session 4', track: 'Short Papers',
       title: 'Towards an Agentic MAPE-K Architecture for Self-Adaptive Robotic Arm Systems',
       authors: 'Joaquim Ribeiro (State University of Ceara, Brazil); Beatriz Andrade (UECE, Brazil); Suyane Freitas (UECE, Brazil); Lucas Vieira Alves (State University of Ceara, Brazil); Paulo Maia (UECE, Brazil)'
     },
     {
-      id: 'paper-13', time: '17:40–17:48', session: 'Technical Session 4', track: 'Position and Vision Papers',
+      id: 'paper-13', time: '17:40-17:48', session: 'Technical Session 4', track: 'Position and Vision Papers',
       title: 'Towards Agentic Research Problem Engineering: A Vision for Human-AI Collaboration in Software Engineering Research',
       authors: 'Anrafel Fernandes Pereira (PUC-Rio, Brazil); Rafael Tomaz (PUC-Rio, Brazil); Paloma Guenes Costa (PUC-Rio, Brazil); Eduardo Almentero (UFRRJ, Brazil); Allysson Allex Araújo (Universidade Federal do Cariri, Brazil); Marcos Kalinowski (PUC-Rio, Brazil)'
     },
     {
-      id: 'paper-14', time: '17:48–17:58', session: 'Technical Session 4', track: 'Industrial Experience Reports',
+      id: 'paper-14', time: '17:48-17:58', session: 'Technical Session 4', track: 'Industrial Experience Reports',
       title: 'Lessons Learned from Developing a Multi-Agent Healthcare Chatbot for Sickle Cell Disease Care',
       authors: 'David Pereira (UFCG, Brazil); Herman Martins Gomes (UFCG, Brazil); Cláudio Elízio Calazans Campelo (UFCG, Brazil)'
     },
     {
-      id: 'paper-15', time: '17:58–18:08', session: 'Technical Session 4', track: 'Short Papers',
+      id: 'paper-15', time: '17:58-18:12', session: 'Technical Session 4', track: 'Short Papers',
       title: 'Improving Agentic AI Opportunity Identification Through GORE Driven Prompt Engineering',
       authors: 'Edson Andrade de Moraes (PUC-Rio, Brazil); Marcos Kalinowski (PUC-Rio, Brazil)'
     }
+  ];
+
+  type ScheduleItem = {
+    time: string;
+    type: 'opening' | 'keynote' | 'session' | 'paper' | 'qa' | 'break' | 'closing';
+    title?: string;
+    speaker?: string;
+    paperId?: string;
+  };
+  
+  const programSchedule: ScheduleItem[] = [
+    { time: '11:00', type: 'opening', title: 'Opening Remarks' },
+    { time: '11:10', type: 'keynote', title: 'A Research Agenda on Agents and Software Engineering', speaker: 'Marcos Kalinowski' },
+    
+    { time: '12:10', type: 'session', title: 'Technical Session 1' },
+    { time: '12:10', type: 'paper', paperId: 'paper-1' },
+    { time: '12:18', type: 'paper', paperId: 'paper-2' },
+    { time: '12:26', type: 'qa', title: 'Q&A Session (Technical Session 1)' },
+    
+    { time: '12:30', type: 'break', title: 'Lunch Break' },
+    
+    { time: '14:00', type: 'session', title: 'Technical Session 2' },
+    { time: '14:00', type: 'paper', paperId: 'paper-3' },
+    { time: '14:08', type: 'paper', paperId: 'paper-4' },
+    { time: '14:18', type: 'paper', paperId: 'paper-5' },
+    { time: '14:26', type: 'paper', paperId: 'paper-6' },
+    { time: '14:36', type: 'paper', paperId: 'paper-7' },
+    { time: '14:46', type: 'qa', title: 'Q&A Session (Technical Session 2)' },
+  
+    { time: '15:10', type: 'session', title: 'Technical Session 3' },
+    { time: '15:10', type: 'paper', paperId: 'paper-8' },
+    { time: '15:20', type: 'paper', paperId: 'paper-9' },
+    { time: '15:28', type: 'paper', paperId: 'paper-10' },
+    { time: '15:38', type: 'paper', paperId: 'paper-11' },
+    { time: '15:46', type: 'qa', title: 'Q&A Session (Technical Session 3)' },
+  
+    { time: '16:00', type: 'break', title: 'Coffee Break' },
+    { time: '16:30', type: 'keynote', title: 'Invited Talk', speaker: 'Andrews Medina' },
+  
+    { time: '17:30', type: 'session', title: 'Technical Session 4' },
+    { time: '17:30', type: 'paper', paperId: 'paper-12' },
+    { time: '17:40', type: 'paper', paperId: 'paper-13' },
+    { time: '17:48', type: 'paper', paperId: 'paper-14' },
+    { time: '17:58', type: 'paper', paperId: 'paper-15' },
+    { time: '18:12', type: 'qa', title: 'Q&A Session (Technical Session 4)' },
+  
+    { time: '18:20', type: 'closing', title: 'Closing Remarks and Awards' }
   ];
 
   const papersData: Paper[] = rawPapers.map((p) => ({
@@ -1294,6 +1341,147 @@ function AppContent() {
         </AnimatePresence>
       </section>
 
+      {/* Program Section */}
+      <section id="program" className="scroll-mt-24 relative py-24 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection>
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-1 bg-slate-800" />
+              <h2 className="text-5xl font-bold text-slate-900">
+                Program Schedule
+              </h2>
+            </div>
+            <p className="text-slate-600 mb-12 text-lg ml-16">
+              Full schedule. All times are local (BRT).
+            </p>
+          </AnimatedSection>
+
+          <div className="max-w-full mx-auto space-y-4">
+            {programSchedule.map((item, index) => {
+              // Item do tipo Artigo
+              if (item.type === 'paper') {
+                const paper = papersData.find((p) => p.id === item.paperId);
+                if (!paper) return null;
+
+                return (
+                  <AnimatedSection key={index} delay={0.02}>
+                    <motion.div
+                      onClick={() => setSelectedPaper(paper)}
+                      whileHover={{ x: 4 }}
+                      className="p-5 bg-slate-50 hover:bg-slate-100/80 border border-slate-200 rounded-xl transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+                    >
+                      <div className="flex-1 space-y-1">
+                        <div className="flex items-start gap-2.5 flex-1">
+                          <span className="shrink-0 whitespace-nowrap flex items-center gap-1 text-xs font-mono font-bold px-2 py-0.5 bg-slate-200 text-slate-800 rounded mt-0.5">
+                            <Clock className="w-3 h-3 text-slate-500" />
+                            {item.time}
+                          </span>
+                          <div className="space-y-1 flex-1">
+                            <h4 className="font-semibold text-slate-900 text-base leading-snug group-hover:text-slate-800">
+                              {paper.title}
+                            </h4>
+                            <p className="text-xs text-slate-500">
+                              {paper.authors.map(a => a.name).join(', ')}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center text-xs font-medium text-slate-400 group-hover:text-slate-900 transition-colors self-end sm:self-center">
+                        Details <ChevronDown size={14} className="rotate-270 ml-1" />
+                      </div>
+                    </motion.div>
+                  </AnimatedSection>
+                );
+              }
+
+              // Item do tipo Keynote
+              if (item.type === 'keynote') {
+                const speakerObj = keynotesData.find(k => k.name && item.speaker?.includes(k.name));
+                return (
+                  <AnimatedSection key={index} delay={0.02}>
+                    <motion.div
+                      onClick={() => speakerObj && setSelectedSpeaker(speakerObj)}
+                      whileHover={{ scale: 1.01 }}
+                      className="p-5 bg-slate-900 text-white rounded-xl shadow-md cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="flex items-center gap-1.5 text-xs font-mono font-bold px-2 py-0.5 bg-slate-800 text-slate-200 rounded border border-slate-700">
+                            <Clock className="w-3 h-3 text-slate-400" />
+                            {item.time}
+                          </span>
+                          <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                            Keynote Talk
+                          </span>
+                        </div>
+                        <h4 className="font-bold text-lg text-white">{item.title}</h4>
+                        <p className="text-sm text-slate-300">{item.speaker}</p>
+                      </div>
+                      <span className="text-xs font-medium text-slate-300 group-hover:text-white flex items-center gap-1 self-end sm:self-center">
+                        Speaker Profile <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
+                    </motion.div>
+                  </AnimatedSection>
+                );
+              }
+
+              // Cabeçalho de Sessão Técnica (Com divisor nativo da página)
+              if (item.type === 'session') {
+                return (
+                  <AnimatedSection key={index} delay={0.02}>
+                    <div className="pt-10 pb-4 flex items-center justify-between border-b border-slate-200 mb-2">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-1 bg-slate-800" />
+                        <h3 className="text-2xl font-bold text-slate-900">{item.title}</h3>
+                      </div>
+                      <span className="flex items-center gap-1.5 text-xs font-mono font-bold px-2.5 py-1 bg-slate-100 text-slate-700 rounded-md border border-slate-200">
+                        <Clock className="w-3 h-3 text-slate-500" />
+                        {item.time}
+                      </span>
+                    </div>
+                  </AnimatedSection>
+                );
+              }
+
+              // Breaks (Coffee / Lunch)
+              if (item.type === 'break') {
+                return (
+                  <AnimatedSection key={index} delay={0.02}>
+                    <div className="p-3.5 bg-amber-50/60 border border-amber-200/60 rounded-xl flex items-center justify-between text-amber-900">
+                      <div className="flex items-center gap-3">
+                        <span className="flex items-center gap-1.5 text-xs font-mono font-bold px-2 py-0.5 bg-amber-100 text-amber-900 rounded">
+                          <Clock className="w-3 h-3 text-amber-700" />
+                          {item.time}
+                        </span>
+                        <span className="text-sm font-semibold">{item.title}</span>
+                      </div>
+                    </div>
+                  </AnimatedSection>
+                );
+              }
+
+              // Q&A / Abertura / Encerramento
+              return (
+                <AnimatedSection key={index} delay={0.02}>
+                  <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between text-slate-700">
+                    <div className="flex items-center gap-3">
+                      <span className="flex items-center gap-1.5 text-xs font-mono font-bold px-2 py-0.5 bg-slate-200/80 text-slate-800 rounded">
+                        <Clock className="w-3 h-3 text-slate-500" />
+                        {item.time}
+                      </span>
+                      <span className="text-sm font-semibold text-slate-800">
+                        {item.type === 'qa'}
+                        {item.title}
+                      </span>
+                    </div>
+                  </div>
+                </AnimatedSection>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Committee Section */}
       <section id="committee" className="scroll-mt-24 relative py-24 px-6 bg-slate-50">
         <div className="max-w-7xl mx-auto">
@@ -1390,7 +1578,7 @@ function AppContent() {
             <div className="flex justify-center">
               <div className="bg-white rounded-xl p-8 w-64 flex items-center justify-center">
                 <img
-                  src="agents4good.png"
+                  src="kunumi-agents4good.png"
                   alt="Sponsor"
                   className="max-h-full w-auto"
                 />
@@ -1414,7 +1602,7 @@ function AppContent() {
             <div>
               <h3 className="font-semibold mb-4 text-lg">Quick Links</h3>
               <div className="flex flex-col gap-2">
-                {(['overview', 'topics', 'keynotes', 'dates', 'submission', 'papers', 'committee'] as const).map((link) => (
+                {(['overview', 'topics', 'keynotes', 'dates', 'submission', 'papers', 'program', 'committee'] as const).map((link) => (
                   <a
                     key={link}
                     href={`#${link}`}
