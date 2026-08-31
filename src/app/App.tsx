@@ -125,9 +125,13 @@ function AppContent() {
     //institution: "AI Researcher",
     image: "andrews-medina.jpeg",
     topic: "Scaling Software Development with AI: Practices, Challenges, and Open Questions",
-    abstract: `The use of AI in software development is advancing rapidly, from assistants that support individual tasks to agents capable of taking on increasingly complex and autonomous activities. As we try to scale this use, however, challenges arise that go beyond the models' ability to generate code and that, often, resemble those we already face when scaling engineering teams: how to divide and coordinate work, share context, review results, and maintain quality.
+    abstract: `The use of AI in software development is advancing rapidly, from assistants that support individual tasks to agents capable of taking on increasingly \
+    complex and autonomous activities. As we try to scale this use, however, challenges arise that go beyond the models' ability to generate code and that, often, \
+    resemble those we already face when scaling engineering teams: how to divide and coordinate work, share context, review results, and maintain quality.
 
-    In the talk, Andrews Medina will bring an industry perspective on the current state of software development with AI, discussing practices that are emerging, the challenges encountered in the adoption and use of agents at scale, and the questions that still remain open. More than presenting a definitive model, the talk seeks to share what we are learning in practice while this new way of developing software is still being built.`,
+    In the talk, Andrews Medina will bring an industry perspective on the current state of software development with AI, discussing practices that are emerging, \
+    the challenges encountered in the adoption and use of agents at scale, and the questions that still remain open. More than presenting a definitive model, \
+    the talk seeks to share what we are learning in practice while this new way of developing software is still being built.`,
     bio: (
       <>
         Andrews Medina has spent his career building and leading engineering teams behind large-scale systems. 
