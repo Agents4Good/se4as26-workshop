@@ -249,8 +249,8 @@ function AppContent() {
     },
     {
       id: 'paper-14', time: '17:48-17:58', session: 'Technical Session 4', track: 'Industrial Experience Reports',
-      title: 'Lessons Learned from Developing a Multi-Agent Healthcare Chatbot for Sickle Cell Disease Care',
-      authors: 'David Pereira (UFCG, Brazil); Herman Martins Gomes (UFCG, Brazil); Cláudio Elízio Calazans Campelo (UFCG, Brazil)'
+      title: 'HemaChat: Lessons Learned from Developing a Multi-Agent Healthcare Chatbot for Sickle Cell Disease Care',
+      authors: 'David Pereira (UFCG, Brazil); Herman Martins Gomes (UFCG, Brazil); Cláudio Elízio Calazans Campelo (UFCG, Brazil); Eliane Araújo (UFCG, Brazil)'
     },
     {
       id: 'paper-15', time: '17:58-18:12', session: 'Technical Session 4', track: 'Short Papers',
