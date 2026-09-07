@@ -444,6 +444,7 @@ function AppContent() {
     { name: "Débora Souza", institution: "UFCG" },
     { name: "Caíque Calazans", institution: "UFCG" },
     { name: "Beatriz Furtado", institution: "UFCG" },
+    { name: "Robson Junior", institution: "UFCG" },
     { name: "Gabriella Araujo", institution: "UFCG" },
     { name: "Matheus Hensley", institution: "UFCG" }
   ];
@@ -1583,11 +1584,18 @@ function AppContent() {
           {/* Sponsor Section */}
           <div className="mb-12 pb-12 border-b border-slate-800">
             <h3 className="font-semibold mb-6 text-xl text-center">Sponsored By</h3>
-            <div className="flex justify-center">
+            <div className="flex flex-wrap justify-center gap-6">
               <div className="bg-white rounded-xl p-8 w-64 flex items-center justify-center">
                 <img
-                  src="kunumi-agents4good.png"
-                  alt="Sponsor"
+                  src="agents4good.png"
+                  alt="Sponsor 1"
+                  className="max-h-full w-auto"
+                />
+              </div>
+              <div className="bg-white rounded-xl p-8 w-64 flex items-center justify-center">
+                <img
+                  src="kunumi.svg" 
+                  alt="Sponsor 2"
                   className="max-h-full w-auto"
                 />
               </div>
